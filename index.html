@@ -354,6 +354,17 @@
       transform: translateY(-3px);
     }
 
+    .btn-resume {
+      background: linear-gradient(135deg, var(--secondary), var(--accent-cyan));
+      color: white;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-resume:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(16, 185, 129, 0.6);
+    }
+
     /* Header */
     .header {
       position: fixed;
@@ -952,7 +963,7 @@
       margin-bottom: 0.75rem;
       color: var(--text-secondary);
       font-size: 0.95rem;
-      line-height: 1.7; /* Better readability */
+      line-height: 1.7;
     }
 
     .timeline-description li::before {
@@ -966,278 +977,9 @@
       border-radius: 50%;
     }
 
-    /* Projects Section */
-    .projects-section {
-      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 2.5rem;
-    }
-
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      transition: all var(--timing) var(--ease);
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      transform: translateY(50px);
-    }
-
-    .project-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .project-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--primary);
-      box-shadow: var(--shadow-glow);
-    }
-
-    .project-image {
-      position: relative;
-      height: 240px;
-      overflow: hidden;
-    }
-
-    .project-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform var(--timing-slow) var(--ease);
-    }
-
-    .project-card:hover .project-image img {
-      transform: scale(1.1);
-    }
-
-    .project-image-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 0%, rgba(3, 7, 18, 0.9) 100%);
-    }
-
-    .project-featured-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: linear-gradient(135deg, var(--primary), var(--accent-pink));
-      color: white;
-      padding: 0.4rem 1rem;
-      border-radius: var(--radius-full);
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .project-content {
-      padding: 2rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-title {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .project-description {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      flex: 1;
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .project-tag {
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      color: var(--primary-light);
-      padding: 0.35rem 0.9rem;
-      border-radius: var(--radius-full);
-      font-size: 0.8rem;
-      font-family: 'JetBrains Mono', monospace;
-      transition: all var(--timing) var(--ease);
-    }
-
-    .project-tag:hover {
-      background: rgba(99, 102, 241, 0.2);
-      transform: translateY(-2px);
-    }
-
-    .project-links {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      transition: all var(--timing) var(--ease);
-    }
-
-    .project-link:hover {
-      color: var(--primary-light);
-    }
-
-    /* Skills Section */
-    .skills-section {
-      background: var(--bg-darker);
-      position: relative;
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-    }
-
-    .skill-category {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-xl);
-      padding: 2rem;
-      backdrop-filter: blur(10px);
-      transition: all var(--timing) var(--ease);
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    .skill-category.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .skill-category:hover {
-      border-color: var(--primary);
-      box-shadow: var(--shadow-glow);
-    }
-
-    .skill-category-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .skill-category-icon {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, var(--primary), var(--accent-pink));
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      color: white;
-    }
-
-    .skill-category-title {
-      font-size: 1.25rem;
-    }
-
-    .skill-bars {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .skill-bar-item {
-      position: relative;
-    }
-
-    .skill-bar-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-    }
-
-    .skill-bar-name {
-      font-weight: 500;
-      font-size: 0.95rem;
-    }
-
-    .skill-bar-percentage {
-      color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-    }
-
-    .skill-bar-track {
-      height: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius-full);
-      overflow: hidden;
-    }
-
-    .skill-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--accent-pink), var(--accent-cyan));
-      border-radius: var(--radius-full);
-      width: 0;
-      transition: width 1.5s var(--ease-out);
-      position: relative;
-    }
-
-    .skill-bar-fill::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      animation: shimmer 2s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    .skill-tags-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-
-    .skill-tag-item {
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      color: var(--text-primary);
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-full);
-      font-size: 0.9rem;
-      transition: all var(--timing) var(--ease);
-    }
-
-    .skill-tag-item:hover {
-      background: rgba(99, 102, 241, 0.2);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
-    }
-
     /* Hobbies Section */
     .hobbies-section {
-      background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
       position: relative;
       overflow: hidden;
     }
@@ -1397,9 +1139,251 @@
       100% { left: calc(100% + 30px); }
     }
 
+    /* Projects Section */
+    .projects-section {
+      background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: all var(--timing) var(--ease);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    .project-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .project-image {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--timing-slow) var(--ease);
+    }
+
+    .project-card:hover .project-image img {
+      transform: scale(1.1);
+    }
+
+    .project-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(3, 7, 18, 0.9) 100%);
+    }
+
+    .project-featured-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent-pink));
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .project-content {
+      padding: 2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-description {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      flex: 1;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tag {
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      color: var(--primary-light);
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all var(--timing) var(--ease);
+    }
+
+    .project-tag:hover {
+      background: rgba(99, 102, 241, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      transition: all var(--timing) var(--ease);
+    }
+
+    .project-link:hover {
+      color: var(--primary-light);
+    }
+
+    /* Skills Section */
+    .skills-section {
+      background: var(--bg-dark);
+      position: relative;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-category {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transition: all var(--timing) var(--ease);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .skill-category.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .skill-category:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .skill-category-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-category-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--accent-pink));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: white;
+    }
+
+    .skill-category-title {
+      font-size: 1.25rem;
+    }
+
+    .skill-tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .skill-tag-item {
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      color: var(--text-primary);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      transition: all var(--timing) var(--ease);
+    }
+
+    .skill-tag-item:hover {
+      background: rgba(99, 102, 241, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    /* Language proficiency badges */
+    .language-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .language-item:last-child {
+      border-bottom: none;
+    }
+
+    .language-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .language-level {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary-light);
+    }
+
+    .language-level.native {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--secondary);
+    }
+
     /* Contact Section */
     .contact-section {
-      background: var(--bg-dark);
+      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
       position: relative;
     }
 
@@ -1656,7 +1640,7 @@
       height: 100%;
       background: linear-gradient(90deg, var(--primary), var(--accent-pink), var(--accent-cyan));
       border-radius: var(--radius-full);
-      animation: loading 2s ease-in-out forwards;
+      animation: loading 1s ease-in-out forwards;
     }
 
     @keyframes loading {
@@ -1883,8 +1867,8 @@
 
         <nav class="nav-links">
           <a href="#about" class="nav-link">About</a>
-          <a href="#hobbies" class="nav-link">Beyond Code</a>
           <a href="#experience" class="nav-link">Experience</a>
+          <a href="#hobbies" class="nav-link">Beyond Code</a>
           <a href="#projects" class="nav-link">Projects</a>
           <a href="#skills" class="nav-link">Skills</a>
           <a href="#contact" class="nav-link">Contact</a>
@@ -1904,8 +1888,8 @@
     </button>
     <div class="mobile-nav-links">
       <a href="#about" class="mobile-nav-link">About</a>
-      <a href="#hobbies" class="mobile-nav-link">Beyond Code</a>
       <a href="#experience" class="mobile-nav-link">Experience</a>
+      <a href="#hobbies" class="mobile-nav-link">Beyond Code</a>
       <a href="#projects" class="mobile-nav-link">Projects</a>
       <a href="#skills" class="mobile-nav-link">Skills</a>
       <a href="#contact" class="mobile-nav-link">Contact</a>
@@ -1945,6 +1929,10 @@
             <a href="#projects" class="btn btn-primary">
               <i class="fas fa-rocket"></i>
               View Projects
+            </a>
+            <a href="Raghav_Dheri_Resume.pdf" download class="btn btn-resume">
+              <i class="fas fa-download"></i>
+              Download Resume
             </a>
             <a href="#contact" class="btn btn-secondary">
               <i class="fas fa-paper-plane"></i>
@@ -2080,6 +2068,86 @@
     </div>
   </section>
 
+  <section class="section experience-section" id="experience">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">
+          <i class="fas fa-briefcase"></i>
+          Career Journey
+        </div>
+        <h2 class="section-title gradient-text">Professional Experience</h2>
+        <p class="section-subtitle">
+          My journey through internships, research, and leadership roles that have shaped my career
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">Jun 2025 – Aug 2025</span>
+            <h3 class="timeline-title">Software Engineer Intern</h3>
+            <div class="timeline-company">
+              <i class="fas fa-building"></i>
+              Genpact | Remote
+            </div>
+            <ul class="timeline-description">
+              <li>Transformed regulatory workflows by building 10+ Python scrapers (Selenium and BeautifulSoup) that extracted website and PDF content, structuring it into Excel reports (OpenPyXL) and reducing data collection time by 75%.</li>
+              <li>Built a RAG-powered financial recommendation system combining custom cashflow forecasting with Ollama LLM, achieving 95+% accuracy on 12-month projections and enabling insight extraction from 500+ financial documents.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">Aug 2024 – May 2025</span>
+            <h3 class="timeline-title">Research Assistant</h3>
+            <div class="timeline-company">
+              <i class="fas fa-flask"></i>
+              NetSys Lab, Stony Brook University
+            </div>
+            <ul class="timeline-description">
+              <li>Developed an on-device iOS gesture-recognition app (Swift, Core ML) that classifies 8 gestures at 94% accuracy, enabling screen-free navigation for visually-impaired users through iterative user feedback.</li>
+              <li>Optimized and drove gesture-classification by retraining the model on an expanded dataset, increasing precision by 25% and reducing false positives to under 4 per hour.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">Jun 2024 – Aug 2024</span>
+            <h3 class="timeline-title">Software Developer Intern</h3>
+            <div class="timeline-company">
+              <i class="fas fa-building"></i>
+              Falcon Technologies | New Delhi, India
+            </div>
+            <ul class="timeline-description">
+              <li>Designed distributed payment processing system handling 3,000 requests/second using Java microservices and Spring Boot, collaborating with cross-functional teams to reduce transaction latency by 15%.</li>
+              <li>Established Jenkins-based CI/CD pipeline by integrating automated test suites and optimizing build scripts, cutting merge-to-production time from 25 min to 15 min and lifting test coverage from 60% to 88%.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">Jan 2024 – May 2024</span>
+            <h3 class="timeline-title">Teaching Assistant — Data Structures & Algorithms</h3>
+            <div class="timeline-company">
+              <i class="fas fa-chalkboard-teacher"></i>
+              Stony Brook University
+            </div>
+            <ul class="timeline-description">
+              <li>Redesigned DSA recitation curriculum by implementing live-coding sessions and interactive labs for 35+ students, increasing attendance by 20% and improving average quiz scores by 30%.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section hobbies-section" id="hobbies">
     <div class="container">
       <div class="section-header">
@@ -2144,142 +2212,6 @@
           <div class="hobby-detail">Super Max! 🏆</div>
           <div class="f1-track">
             <div class="f1-car">🏎️</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section experience-section" id="experience">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">
-          <i class="fas fa-briefcase"></i>
-          Career Journey
-        </div>
-        <h2 class="section-title gradient-text">Professional Experience</h2>
-        <p class="section-subtitle">
-          My journey through internships, research, and leadership roles that have shaped my career
-        </p>
-      </div>
-
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">Jun 2025 – Aug 2025</span>
-            <h3 class="timeline-title">Software Engineer Intern</h3>
-            <div class="timeline-company">
-              <i class="fas fa-building"></i>
-              Genpact | Remote
-            </div>
-            <ul class="timeline-description">
-              <li>Architected and deployed a robust suite of over 10 Python-based web scrapers utilizing Selenium and BeautifulSoup to aggregate complex regulatory data from 28 disparate international sources in 10 distinct languages, effectively reducing manual data collection overhead by 75%.</li>
-              <li>Engineered an advanced RAG (Retrieval-Augmented Generation) financial recommendation engine that synergized custom cashflow forecasting algorithms with the Ollama LLM, delivering highly accurate 12-month projections with a success rate exceeding 95%.</li>
-              <li>Spearheaded the development of an intelligent document processing pipeline capable of ingesting 500+ financial reports, featuring automated de-duplication logic and LLM-optimized diff generation to streamline analyst workflows.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">Aug 2024 – May 2025</span>
-            <h3 class="timeline-title">Research Assistant</h3>
-            <div class="timeline-company">
-              <i class="fas fa-flask"></i>
-              NetSys Lab, Stony Brook University
-            </div>
-            <ul class="timeline-description">
-              <li>Led the end-to-end development of a sophisticated on-device iOS gesture-recognition application using Swift and Core ML, specifically designed to assist visually impaired users by classifying 8 distinct gestures with 94% accuracy.</li>
-              <li>Conducted extensive model optimization and retraining on an expanded dataset, resulting in a 25% increase in precision and a significant reduction in false positives to fewer than 4 incidents per hour of continuous usage.</li>
-              <li>Optimized the inference pipeline to achieve an ultra-low average end-to-end latency of 57ms, ensuring real-time feedback significantly below standard human reaction thresholds.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">Aug 2024 – Present</span>
-            <h3 class="timeline-title">Teaching Assistant</h3>
-            <div class="timeline-company">
-              <i class="fas fa-chalkboard-teacher"></i>
-              Multivariable Calculus III | Stony Brook University
-            </div>
-            <ul class="timeline-description">
-              <li>Orchestrate comprehensive weekly recitation sessions for undergraduate students, breaking down complex topics such as vector-valued functions, partial derivatives, and multiple integration into digestible concepts.</li>
-              <li>Mentor students on advanced optimization techniques involving Lagrange multipliers and 3D surface visualization, fostering a deeper mathematical intuition.</li>
-              <li>Collaborate closely with faculty to design rigorous problem sets and examinations that accurately assess student mastery of course material.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">Jun 2024 – Aug 2024</span>
-            <h3 class="timeline-title">Software Developer Intern</h3>
-            <div class="timeline-company">
-              <i class="fas fa-building"></i>
-              Falcon Technologies | New Delhi, India
-            </div>
-            <ul class="timeline-description">
-              <li>Designed and implemented a high-throughput distributed payment processing system capable of handling 3,000 concurrent requests per second, utilizing Java microservices architecture and Spring Boot framework.</li>
-              <li>Revolutionized the deployment workflow by establishing a Jenkins-based CI/CD pipeline, effectively cutting the merge-to-production cycle time from 25 minutes down to 15 minutes.</li>
-              <li>Drove a quality-first initiative by writing comprehensive automated test suites and optimizing build scripts, increasing code coverage from 60% to 88% across core services.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">Jan 2024 – May 2024</span>
-            <h3 class="timeline-title">VIP Team Member</h3>
-            <div class="timeline-company">
-              <i class="fas fa-users"></i>
-              Tech, Business, in Development | Stony Brook University
-            </div>
-            <ul class="timeline-description">
-              <li>Co-led a diverse team of 5 members developing cutting-edge cloud applications for student services</li>
-              <li>Refined React setup and integrated service-worker.js for robust browser-extension communication</li>
-              <li>Streamlined UI development with iterative builds and multi-console debugging</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">Jan 2024 – May 2024</span>
-            <h3 class="timeline-title">Teaching Assistant</h3>
-            <div class="timeline-company">
-              <i class="fas fa-code"></i>
-              Data Structures & Algorithms | Stony Brook University
-            </div>
-            <ul class="timeline-description">
-              <li>Facilitated weekly 60-minute recitation sessions for 35+ students on algorithmic concepts</li>
-              <li>Provided individualized support demonstrating strong communication and problem-solving skills</li>
-              <li>Encouraged collaboration to deepen understanding of abstract data types and advanced algorithms</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">Aug 2023 – Jan 2024</span>
-            <h3 class="timeline-title">Hall Council President</h3>
-            <div class="timeline-company">
-              <i class="fas fa-crown"></i>
-              Stony Brook University
-            </div>
-            <ul class="timeline-description">
-              <li>Served as official representative shaping residential experience for 300+ residents</li>
-              <li>Chaired Executive Board meetings, guiding discussions for a diverse team of 9</li>
-              <li>Spearheaded $1,240 budget allocation for events, boosting community engagement by 30%</li>
-            </ul>
           </div>
         </div>
       </div>
@@ -2485,70 +2417,18 @@
             </div>
             <h3 class="skill-category-title">Programming Languages</h3>
           </div>
-          <div class="skill-bars">
-            <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">Java</span>
-                <span class="skill-bar-percentage">95%</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="95%"></div>
-              </div>
-            </div>
-            <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">Python</span>
-                <span class="skill-bar-percentage">92%</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="92%"></div>
-              </div>
-            </div>
-            <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">JavaScript/TypeScript</span>
-                <span class="skill-bar-percentage">90%</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="90%"></div>
-              </div>
-            </div>
-            <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">Swift</span>
-                <span class="skill-bar-percentage">85%</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="85%"></div>
-              </div>
-            </div>
-            <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">C</span>
-                <span class="skill-bar-percentage">80%</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="80%"></div>
-              </div>
-            </div>
-             <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">C++</span>
-                <span class="skill-bar-percentage">80%</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="80%"></div>
-              </div>
-            </div>
-             <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">Go (Golang)</span>
-                <span class="skill-bar-percentage">75%</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="75%"></div>
-              </div>
-            </div>
+          <div class="skill-tags-list">
+            <span class="skill-tag-item">Java</span>
+            <span class="skill-tag-item">Python</span>
+            <span class="skill-tag-item">JavaScript</span>
+            <span class="skill-tag-item">TypeScript</span>
+            <span class="skill-tag-item">Swift</span>
+            <span class="skill-tag-item">C</span>
+            <span class="skill-tag-item">C++</span>
+            <span class="skill-tag-item">Go</span>
+            <span class="skill-tag-item">SQL</span>
+            <span class="skill-tag-item">HTML/CSS</span>
+            <span class="skill-tag-item">Bash</span>
           </div>
         </div>
 
@@ -2650,42 +2530,22 @@
             </div>
             <h3 class="skill-category-title">Languages</h3>
           </div>
-          <div class="skill-bars">
-            <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">English</span>
-                <span class="skill-bar-percentage">Native</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="100%"></div>
-              </div>
+          <div>
+            <div class="language-item">
+              <span class="language-name">English</span>
+              <span class="language-level native">Native</span>
             </div>
-            <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">Hindi</span>
-                <span class="skill-bar-percentage">Native</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="100%"></div>
-              </div>
+            <div class="language-item">
+              <span class="language-name">Hindi</span>
+              <span class="language-level native">Native</span>
             </div>
-            <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">Punjabi</span>
-                <span class="skill-bar-percentage">Native</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="100%"></div>
-              </div>
+            <div class="language-item">
+              <span class="language-name">Punjabi</span>
+              <span class="language-level native">Native</span>
             </div>
-            <div class="skill-bar-item">
-              <div class="skill-bar-header">
-                <span class="skill-bar-name">Spanish</span>
-                <span class="skill-bar-percentage">Limited</span>
-              </div>
-              <div class="skill-bar-track">
-                <div class="skill-bar-fill" data-width="40%"></div>
-              </div>
+            <div class="language-item">
+              <span class="language-name">Spanish</span>
+              <span class="language-level">Limited</span>
             </div>
           </div>
         </div>
@@ -2798,8 +2658,8 @@
           <h4>Quick Links</h4>
           <ul>
             <li><a href="#about">About Me</a></li>
-            <li><a href="#hobbies">Beyond Code</a></li>
             <li><a href="#experience">Experience</a></li>
+            <li><a href="#hobbies">Beyond Code</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#skills">Skills</a></li>
           </ul>
@@ -2834,7 +2694,7 @@
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.querySelector('.loader').classList.add('loaded');
-      }, 2500);
+      }, 1000);
     });
 
     // ============ CUSTOM CURSOR ============
@@ -2972,7 +2832,7 @@
       }
     }
 
-    setTimeout(showTerminalLines, 3000);
+    setTimeout(showTerminalLines, 1500);
 
     // ============ SCROLL ANIMATIONS ============
     const observerOptions = {
@@ -2984,14 +2844,6 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          
-          // Animate skill bars
-          if (entry.target.classList.contains('skill-category')) {
-            const fills = entry.target.querySelectorAll('.skill-bar-fill');
-            fills.forEach(fill => {
-              fill.style.width = fill.dataset.width;
-            });
-          }
         }
       });
     }, observerOptions);
