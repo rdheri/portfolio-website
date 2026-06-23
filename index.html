@@ -1,1830 +1,377 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Raghav Dheri, Software Engineer</title>
-<meta name="description" content="Raghav Dheri. New-grad software engineer. CS + Applied Math at Stony Brook, graduating May 2026. Based in New York.">
-<meta name="theme-color" content="#EDE8DE">
-<meta property="og:title" content="Raghav Dheri, Software Engineer">
-<meta property="og:description" content="New-grad SWE. CS + Applied Math @ Stony Brook. I love building things and solving problems.">
+<title>Raghav Dheri — Full-Stack Developer</title>
+<meta name="description" content="Raghav Dheri — full-stack developer. I build things that don't break — and three of them are running live on this page. Recent Stony Brook grad (CS + Applied Math).">
+<meta name="theme-color" content="#F3F4F1">
+<meta property="og:title" content="Raghav Dheri — Full-Stack Developer">
+<meta property="og:description" content="I build things that don't break. Three of my projects run live on this page — go ahead and try to break them.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://raghavdheri.com/profile-pic.jpeg">
+<link rel="canonical" href="https://raghavdheri.com">
+
+<script>
+  (function () {
+    var d = document.documentElement;
+    try {
+      var t = localStorage.getItem('theme');
+      d.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+    } catch (e) { d.setAttribute('data-theme', 'light'); }
+    try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('anim'); } catch (e) {}
+  })();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<style>
-/* ============================================================
-   BLUEPRINT. raghavdheri.github.io
-   Single-file, no build, vanilla JS, GitHub Pages deployable.
-
-   Per-frame perf budget (enforced in the rAF loop below):
-     cursor physics       ≤ 2ms
-     type weight updates  ≤ 6ms
-     grid + scroll        ≤ 2ms
-     ──────────────────────────────────────
-     total target         ≤ 10ms   (of 16.67ms @ 60fps)
-
-   performance.now() debug markers live at two points in frame().
-   Uncomment the `const t0 = ...` lines and the trailing
-   console.log to measure worst-case frames on your machine.
-   ============================================================ */
-
-/* ---- Tokens ---------------------------------------------- */
-:root {
-  --paper:       #EDE8DE;
-  --paper-hi:    #F3EFE4;
-  --ink:         #111111;
-  --ink-2:       #2a2826;
-  --ink-mute:    #6b6660;
-  --ink-faint:   #a6a199;
-  --rule:        rgba(17,17,17,0.12);
-  --rule-2:      rgba(17,17,17,0.22);
-
-  --cobalt:      #2B4AD8;
-  --cobalt-ink:  #1D3394;
-
-  --font-display: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
-
-  --gutter: clamp(20px, 4vw, 56px);
-  --header-h: 72px;
-
-  --grid-opacity: 0.22;
-  --scroll-weight-delta: 0;
-  --rail-progress: 0%;
-
-  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-html { background: var(--paper); font-size: 16px; }
-
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-display);
-  font-feature-settings: 'ss01', 'cv11';
-  font-optical-sizing: auto;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-}
-
-body.has-fine-pointer,
-body.has-fine-pointer a,
-body.has-fine-pointer button { cursor: none; }
-
-.sr-only {
-  position: absolute; width: 1px; height: 1px;
-  padding: 0; margin: -1px; overflow: hidden;
-  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-}
-
-.skip {
-  position: absolute; top: -100px; left: 16px;
-  background: var(--ink); color: var(--paper);
-  padding: 10px 16px;
-  font-family: var(--font-mono); font-size: 12px;
-  z-index: 100; text-decoration: none;
-}
-.skip:focus { top: 16px; }
-
-/* ---- Grid + grain --------------------------------------- */
-.grid-bg {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 0;
-  opacity: var(--grid-opacity);
-  transition: opacity 400ms var(--ease-out);
-  background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'><g fill='none' stroke='%23111' stroke-width='0.9'><path d='M96 89v14M89 96h14'/></g></svg>"),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><g fill='none' stroke='%23111' stroke-width='0.55'><path d='M24 21.5v5M21.5 24h5'/></g></svg>");
-  background-size: 192px 192px, 48px 48px;
-  background-position: 0 0, 0 0;
-}
-
-.grain {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 1;
-  opacity: 0.5; mix-blend-mode: multiply;
-}
-.grain svg { width: 100%; height: 100%; display: block; }
-
-/* ---- Cursor reticle -------------------------------------- */
-.cursor {
-  position: fixed; top: 0; left: 0;
-  width: 20px; height: 20px;
-  margin: -10px 0 0 -10px;
-  pointer-events: none; z-index: 10001;
-  opacity: 0;
-  transition: opacity 240ms, width 180ms var(--ease-out),
-              height 180ms var(--ease-out), margin 180ms var(--ease-out);
-  will-change: transform;
-}
-.cursor::before, .cursor::after {
-  content: ''; position: absolute; background: var(--ink);
-  transition: background 200ms var(--ease-out);
-}
-.cursor::before { top: 50%; left: 0;  width: 100%; height: 1px; transform: translateY(-0.5px); }
-.cursor::after  { left: 50%; top: 0; height: 100%; width: 1px;  transform: translateX(-0.5px); }
-.cursor[data-ready] { opacity: 1; }
-.cursor[data-mode="link"] { width: 32px; height: 32px; margin: -16px 0 0 -16px; }
-.cursor[data-mode="link"]::before,
-.cursor[data-mode="link"]::after { background: var(--cobalt); }
-
-/* ---- Header ---------------------------------------------- */
-.site-header {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: var(--header-h);
-  padding: 0 var(--gutter);
-  display: flex; align-items: center; justify-content: space-between;
-  z-index: 50;
-  background: linear-gradient(to bottom, var(--paper) 55%, rgba(237,232,222,0));
-  pointer-events: none;
-}
-.site-header > * { pointer-events: auto; }
-
-.brand {
-  font-family: var(--font-mono);
-  font-size: 13px; letter-spacing: 0.02em;
-  color: var(--ink);
-  display: inline-flex; align-items: baseline; gap: 10px;
-  text-decoration: none;
-}
-.brand-section { color: var(--ink-mute); font-weight: 500; }
-.brand-name { font-weight: 500; letter-spacing: 0.02em; }
-
-.site-nav {
-  display: flex; gap: 24px;
-  font-family: var(--font-mono);
-  font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
-}
-.site-nav a { color: var(--ink); text-decoration: none; padding: 6px 0; }
-.site-nav a::before { content: '[ '; color: var(--ink-faint); transition: color 180ms; }
-.site-nav a::after  { content: ' ]'; color: var(--ink-faint); transition: color 180ms; }
-.site-nav a:hover::before, .site-nav a:hover::after,
-.site-nav a[data-active]::before, .site-nav a[data-active]::after { color: var(--cobalt); }
-
-/* ---- Left rail ------------------------------------------ */
-.rail {
-  position: fixed; left: 22px; top: 50%;
-  transform: translateY(-50%);
-  width: 44px; z-index: 40;
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.08em;
-  color: var(--ink-mute);
-  pointer-events: none;
-  text-align: center;
-}
-.rail-entry { display: block; margin: 6px 0; transition: color 240ms var(--ease-out); }
-.rail-entry[data-active] { color: var(--cobalt); font-weight: 500; }
-.rail-line {
-  width: 1px; height: 260px;
-  background: var(--rule-2);
-  margin: 12px auto; position: relative;
-}
-.rail-line::before {
-  content: ''; position: absolute; left: 0; top: 0;
-  width: 1px; height: var(--rail-progress);
-  background: var(--cobalt);
-  transition: height 180ms linear;
-}
-.rail-tick { position: absolute; left: -3px; width: 7px; height: 1px; background: var(--rule-2); }
-@media (max-width: 980px) { .rail { display: none; } }
-
-/* ---- Main ------------------------------------------------ */
-main {
-  position: relative; z-index: 10;
-  padding: 0 var(--gutter);
-  max-width: 1640px; margin: 0 auto;
-}
-
-.section {
-  padding: 140px 0 120px;
-  position: relative;
-  border-top: 1px solid var(--rule);
-}
-
-.section-meta {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 48px;
-  align-items: baseline;
-  margin-bottom: 24px;
-}
-.section-number {
-  font-family: var(--font-mono);
-  font-size: 12px; letter-spacing: 0.08em;
-  color: var(--ink-mute);
-  padding-top: 14px;
-}
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(36px, 6.5vw, 80px);
-  font-weight: 600;
-  font-variation-settings: 'wght' calc(580 + var(--scroll-weight-delta) * 0.4);
-  line-height: 0.98;
-  letter-spacing: -0.025em;
-  margin: 0;
-  max-width: 18ch;
-}
-.section-frame {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 48px;
-  margin-bottom: 56px;
-}
-.section-frame .section-frame-empty { /* spacer */ }
-.section-frame-text {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--ink-mute);
-  letter-spacing: 0.02em;
-  max-width: 70ch;
-  padding-top: 8px;
-  border-top: 1px dashed var(--rule);
-}
-
-/* ---- Hero ------------------------------------------------ */
-.hero {
-  min-height: 94vh;
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-template-rows: auto 1fr auto auto auto;
-  gap: 28px 56px;
-  padding-top: calc(var(--header-h) + 60px);
-  padding-bottom: 80px;
-  align-content: end;
-  position: relative;
-}
-
-.hero-availability {
-  grid-column: 2; grid-row: 1;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--cobalt);
-  padding: 6px 0;
-  border-top: 1px solid var(--cobalt);
-  border-bottom: 1px solid var(--cobalt);
-  display: inline-flex; align-items: center; gap: 10px;
-  justify-self: start;
-  max-width: fit-content;
-}
-.hero-availability::before { content: '●'; font-size: 7px; }
-
-/* ---- Hero Spec Box (the "§ 00 / Spec" panel) ----------- */
-.hero-meta {
-  grid-column: 1; grid-row: 2;
-  margin: 0;
-  align-self: end;
-  padding: 24px 26px 22px;
-  border: 1px solid var(--ink);
-  background: rgba(243,239,228,0.55);
-  font-family: var(--font-mono);
-  position: relative;
-}
-.hero-meta::before {
-  content: '§ 00 / Spec';
-  position: absolute;
-  top: -9px; left: 18px;
-  padding: 0 10px;
-  background: var(--paper);
-  font-size: 10px;
-  color: var(--ink-mute);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.hero-meta dl {
-  margin: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-.hero-meta dt {
-  color: var(--ink-mute);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-top: 12px;
-  margin-bottom: 3px;
-}
-.hero-meta dt:first-child { margin-top: 0; }
-.hero-meta dd {
-  margin: 0;
-  color: var(--ink);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.35;
-}
-.hero-meta dd.accent { color: var(--cobalt); }
-.hero-meta dd.accent::before {
-  content: '● ';
-  font-size: 9px;
-  vertical-align: 2px;
-  margin-right: 4px;
-}
-
-.hero-title {
-  grid-column: 2; grid-row: 2;
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 500;
-  line-height: 0.86;
-  letter-spacing: -0.045em;
-  font-size: clamp(64px, 15vw, 220px);
-  align-self: end;
-  position: relative;
-  user-select: none;
-}
-.hero-title .word { display: block; white-space: nowrap; }
-.hero-title .glyph {
-  display: inline-block;
-  font-variation-settings: 'wght' 400;
-  will-change: font-variation-settings, clip-path, color;
-}
-
-/* Drafted-in animation
-   Clip-path uses negative top/bottom insets so the
-   clip region extends above/below the glyph box —
-   that keeps ascenders (h, d) and descenders (g)
-   from being cut when the final state holds. */
-.hero-title .glyph {
-  --i: 0;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--ink);
-  clip-path: inset(-10% 100% -30% 0);
-}
-.hero-title.drafted .glyph {
-  animation: draftIn 780ms var(--ease-out) forwards;
-  animation-delay: calc(var(--i) * 55ms + 120ms);
-}
-@keyframes draftIn {
-  0%   { color: transparent; -webkit-text-stroke: 1px var(--ink); clip-path: inset(-10% 100% -30% 0); }
-  55%  { color: transparent; -webkit-text-stroke: 1px var(--ink); clip-path: inset(-10% 0 -30% 0); }
-  100% { color: var(--ink);  -webkit-text-stroke: 0 var(--ink);   clip-path: inset(-10% 0 -30% 0); }
-}
-
-.hero-callouts {
-  position: absolute; inset: 0;
-  pointer-events: none;
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.06em;
-  color: var(--ink-mute);
-  opacity: 0;
-  transition: opacity 320ms var(--ease-out);
-}
-.hero:hover .hero-callouts,
-.hero:focus-within .hero-callouts { opacity: 1; }
-.hero-callouts .callout { position: absolute; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
-.hero-callouts .leader { display: inline-block; width: 30px; height: 1px; background: var(--rule-2); }
-.hero-callouts .callout[data-k="cap"]   { top:    -4px;  right:  8px; }
-.hero-callouts .callout[data-k="base"]  { bottom: -14px; left:   8px; }
-.hero-callouts .callout[data-k="track"] { top:    38%;   right: -12px; }
-.hero-callouts .callout[data-k="wght"]  { bottom: -30px; right: 14px; color: var(--cobalt); }
-
-.hero-tag {
-  grid-column: 2; grid-row: 3;
-  margin: 28px 0 0 0;
-  font-size: clamp(18px, 1.8vw, 24px);
-  line-height: 1.4;
-  max-width: 56ch;
-  font-weight: 400;
-  font-variation-settings: 'wght' calc(440 + var(--scroll-weight-delta));
-  color: var(--ink-2);
-}
-.hero-tag strong {
-  font-weight: 500;
-  font-variation-settings: 'wght' 580;
-  color: var(--ink);
-}
-
-.hero-stack {
-  grid-column: 2; grid-row: 4;
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 14px 24px;
-  margin-top: 36px;
-  padding-top: 22px;
-  border-top: 1px solid var(--rule);
-  font-family: var(--font-mono);
-  max-width: 78ch;
-}
-.hero-stack dt {
-  color: var(--ink-mute);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 11px;
-  padding-top: 3px;
-}
-.hero-stack dd {
-  margin: 0;
-  color: var(--ink);
-  font-size: 13.5px;
-  line-height: 1.75;
-}
-.hero-stack dd .stack-accent { color: var(--cobalt); font-weight: 500; }
-
-.hero-cta {
-  grid-column: 2; grid-row: 5;
-  display: flex; flex-wrap: wrap; align-items: center;
-  gap: 28px;
-  margin-top: 36px;
-  font-family: var(--font-mono);
-  font-size: 13px; letter-spacing: 0.02em;
-}
-.hero-cta a {
-  color: var(--ink); text-decoration: none;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--ink);
-  transition: color 200ms, border-color 200ms;
-}
-.hero-cta a.primary { padding: 11px 20px; border: 1px solid var(--ink); }
-.hero-cta a:hover { color: var(--cobalt); border-color: var(--cobalt); }
-.hero-cta a .arr { display: inline-block; margin-left: 6px; transition: transform 200ms var(--ease-out); }
-.hero-cta a:hover .arr { transform: translate(2px, -2px); }
-
-/* ---- §01 About ------------------------------------------ */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 80px;
-  align-items: start;
-}
-@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
-
-.about-lede {
-  font-size: clamp(20px, 2vw, 28px);
-  line-height: 1.35;
-  font-weight: 400;
-  font-variation-settings: 'wght' calc(440 + var(--scroll-weight-delta));
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  margin: 0 0 22px 0;
-  max-width: 26ch;
-}
-.about-body {
-  font-size: 15.5px; line-height: 1.65;
-  color: var(--ink-2);
-  margin: 0 0 20px 0;
-  max-width: 58ch;
-}
-
-/* ---- Profile portrait (About sidebar) -------------------
-   Treated as a technical drawing specimen: 1px ink border,
-   grayscale to sit in the warm-paper palette, mono caption
-   bar below the image with two columns of annotation. */
-.about-portrait {
-  margin: 0 0 40px 0;
-  max-width: 360px;
-}
-.about-portrait-frame {
-  display: block;
-  border: 1px solid var(--ink);
-  background: var(--paper-hi);
-  padding: 0;
-  position: relative;
-  overflow: hidden;
-}
-.about-portrait-frame img {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: grayscale(100%) contrast(1.02);
-  transition: filter 360ms var(--ease-out);
-}
-.about-portrait:hover .about-portrait-frame img {
-  filter: grayscale(60%) contrast(1.04);
-}
-.about-portrait-caption {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  padding-top: 8px;
-  border-top: 1px dashed var(--rule-2);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: var(--ink-mute);
-}
-.about-portrait-caption .l { color: var(--ink); }
-.about-portrait-caption .r { color: var(--ink-mute); }
-@media (max-width: 900px) {
-  .about-portrait { max-width: 300px; margin: 0 0 32px 0; }
-}
-
-.about-side-label {
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--rule);
-}
-.about-facts {
-  list-style: none; margin: 0 0 28px 0; padding: 0;
-  font-family: var(--font-mono);
-  font-size: 12px; line-height: 1.6;
-}
-.about-facts li {
-  display: grid;
-  grid-template-columns: 1fr;
-  padding: 12px 0;
-  border-bottom: 1px dashed var(--rule);
-}
-.about-facts li:last-child { border-bottom: none; }
-.about-facts .k {
-  color: var(--ink-mute);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.about-facts .v { color: var(--ink); font-size: 13px; }
-
-/* ---- §02 Professional Experience ------------------------ */
-.experience-list { list-style: none; margin: 0; padding: 0; }
-.experience {
-  display: grid;
-  grid-template-columns: 140px 1fr 220px;
-  gap: 48px;
-  padding: 52px 0;
-  border-top: 1px solid var(--rule);
-  position: relative;
-}
-.experience:last-child { border-bottom: 1px solid var(--rule); }
-
-.exp-date {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.06em;
-  color: var(--ink-mute);
-  padding-top: 12px;
-  text-transform: uppercase;
-}
-.exp-body { min-width: 0; }
-.exp-role {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-variation-settings: 'wght' calc(540 + var(--scroll-weight-delta) * 0.4);
-  font-size: clamp(24px, 2.6vw, 34px);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  margin: 0 0 6px 0;
-}
-.exp-org {
-  font-family: var(--font-mono);
-  font-size: 12px; color: var(--ink-mute);
-  margin: 0 0 22px 0; letter-spacing: 0.02em;
-}
-.exp-narrative {
-  font-size: 15px; line-height: 1.65;
-  color: var(--ink-2);
-  max-width: 68ch;
-  margin: 0 0 22px 0;
-}
-.exp-narrative p { margin: 0 0 14px 0; }
-.exp-narrative p:last-child { margin-bottom: 0; }
-.exp-stack {
-  list-style: none; padding: 0; margin: 0;
-  display: flex; flex-wrap: wrap;
-  font-family: var(--font-mono);
-  font-size: 11px; color: var(--ink);
-  letter-spacing: 0.02em;
-  padding-top: 14px;
-  border-top: 1px dashed var(--rule);
-}
-.exp-stack li {
-  padding: 4px 10px;
-  border: 1px solid var(--rule-2);
-  margin: 0 -1px -1px 0;
-}
-.exp-aside {
-  font-family: var(--font-mono);
-  font-size: 11px; color: var(--ink-mute);
-  text-align: right;
-  padding-top: 12px;
-}
-.exp-aside dl { margin: 0; display: grid; grid-template-columns: 1fr auto; row-gap: 4px; column-gap: 14px; }
-.exp-aside dt { color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; }
-.exp-aside dd { margin: 0; color: var(--ink); }
-@media (max-width: 900px) {
-  .experience { grid-template-columns: 1fr; gap: 16px; padding: 40px 0; }
-  .exp-aside { text-align: left; padding-top: 0; }
-  .exp-aside dl { grid-template-columns: 110px 1fr; }
-}
-
-/* ---- §03 Projects --------------------------------------- */
-.projects { list-style: none; margin: 0; padding: 0; }
-.project {
-  display: grid;
-  grid-template-columns: 140px 1fr 220px;
-  gap: 48px;
-  padding: 56px 0;
-  border-top: 1px solid var(--rule);
-  position: relative;
-  isolation: isolate;
-}
-.project:last-child { border-bottom: 1px solid var(--rule); }
-
-.project::before {
-  content: '';
-  position: absolute;
-  inset: -48px -48px;
-  background: radial-gradient(ellipse at 40% 50%,
-              rgba(43,74,216,0.55) 0%,
-              rgba(43,74,216,0.18) 28%,
-              transparent 62%);
-  filter: blur(48px);
-  opacity: 0;
-  z-index: -1;
-  pointer-events: none;
-  transition: opacity 420ms var(--ease-out);
-}
-.project:hover::before,
-.project:focus-within::before { opacity: 0.45; }
-
-.project-index {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.1em;
-  color: var(--ink-mute);
-  padding-top: 12px;
-}
-.project-body { min-width: 0; }
-
-.project-rev {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.04em;
-  color: var(--cobalt);
-  margin: 0 0 14px 0;
-  display: inline-flex; align-items: center; gap: 10px;
-  user-select: none;
-}
-.project-rev::before { content: '●'; font-size: 8px; color: var(--cobalt); }
-
-.project-rev-log {
-  margin: 0;
-  max-height: 0; overflow: hidden;
-  transition: max-height 380ms var(--ease-out), margin 380ms var(--ease-out);
-  font-family: var(--font-mono);
-  font-size: 11px; color: var(--ink-mute);
-  line-height: 1.95;
-  list-style: none; padding: 0;
-}
-.project-rev-log li { padding-left: 18px; position: relative; }
-.project-rev-log li::before { content: '–'; position: absolute; left: 0; color: var(--ink-faint); }
-.project:hover .project-rev-log,
-.project:focus-within .project-rev-log {
-  max-height: 120px;
-  margin: 0 0 18px 0;
-}
-
-.project-title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-variation-settings: 'wght' calc(520 + var(--scroll-weight-delta) * 0.5);
-  font-size: clamp(30px, 3.6vw, 48px);
-  line-height: 1.0;
-  letter-spacing: -0.025em;
-  margin: 0 0 6px 0;
-}
-.project-sub {
-  font-family: var(--font-mono);
-  font-size: 12px; color: var(--ink-mute);
-  margin: 0 0 20px 0; letter-spacing: 0.02em;
-}
-.project-desc {
-  margin: 0 0 24px 0;
-  max-width: 64ch;
-  font-size: 15px; line-height: 1.65;
-  color: var(--ink-2);
-}
-
-.project-stack {
-  list-style: none; padding: 0; margin: 0 0 22px 0;
-  display: flex; flex-wrap: wrap;
-  font-family: var(--font-mono);
-  font-size: 11px; color: var(--ink);
-  letter-spacing: 0.02em;
-}
-.project-stack li {
-  padding: 5px 11px;
-  border: 1px solid var(--rule-2);
-  margin: 0 -1px -1px 0;
-  background: rgba(243,239,228,0.4);
-  transition: background 200ms;
-}
-.project:hover .project-stack li { background: var(--paper-hi); }
-
-.project-links { display: flex; gap: 22px; font-family: var(--font-mono); font-size: 12px; flex-wrap: wrap; align-items: baseline; }
-.project-links a {
-  color: var(--ink); text-decoration: none;
-  border-bottom: 1px solid var(--rule-2);
-  padding-bottom: 2px;
-  transition: color 200ms, border-color 200ms;
-}
-.project-links a:hover, .project-links a:focus-visible { color: var(--cobalt); border-color: var(--cobalt); }
-
-.project-aside {
-  font-family: var(--font-mono);
-  font-size: 11px; color: var(--ink-mute);
-  text-align: right;
-  padding-top: 12px;
-}
-.project-aside dl { margin: 0; display: grid; grid-template-columns: 1fr auto; row-gap: 4px; column-gap: 14px; }
-.project-aside dt { color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; }
-.project-aside dd { margin: 0; color: var(--ink); }
-
-@media (max-width: 900px) {
-  .project { grid-template-columns: 1fr; gap: 20px; padding: 40px 0; }
-  .project-aside { text-align: left; padding-top: 0; }
-  .project-aside dl { grid-template-columns: 110px 1fr; }
-  .project-aside dd { text-align: left; }
-}
-
-/* ---- §04 Outside ---------------------------------------- */
-.outside-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--rule);
-  border-left: 1px solid var(--rule);
-}
-.outside-item {
-  padding: 32px 28px 36px;
-  border-right: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  position: relative;
-  background: transparent;
-  transition: background 320ms var(--ease-out);
-}
-.outside-item::before {
-  content: '';
-  position: absolute;
-  top: -1px; left: 0; right: 0;
-  height: 2px;
-  background: var(--cobalt);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 380ms var(--ease-out);
-}
-.outside-item:hover { background: rgba(243,239,228,0.5); }
-.outside-item:hover::before { transform: scaleX(1); }
-
-.outside-idx {
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.1em;
-  color: var(--ink-mute);
-  margin-bottom: 14px;
-}
-.outside-title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-variation-settings: 'wght' 540;
-  font-size: clamp(22px, 2vw, 28px);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  margin: 0 0 10px 0;
-}
-.outside-sub {
-  font-family: var(--font-mono);
-  font-size: 11px; color: var(--ink-mute);
-  letter-spacing: 0.03em;
-  margin: 0 0 16px 0;
-  padding-bottom: 12px;
-  border-bottom: 1px dashed var(--rule);
-}
-.outside-body {
-  font-size: 14.5px; line-height: 1.6;
-  color: var(--ink-2);
-  margin: 0;
-}
-@media (max-width: 980px) { .outside-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 540px) { .outside-grid { grid-template-columns: 1fr; } }
-
-/* ---- §05 Contact ---------------------------------------- */
-.contact-block {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: start;
-}
-@media (max-width: 900px) { .contact-block { grid-template-columns: 1fr; gap: 36px; } }
-
-.contact-lede {
-  font-size: clamp(22px, 2.4vw, 32px);
-  line-height: 1.3;
-  font-weight: 400;
-  font-variation-settings: 'wght' calc(440 + var(--scroll-weight-delta));
-  max-width: 22ch;
-  margin: 0 0 20px 0;
-  letter-spacing: -0.01em;
-}
-.contact-list { list-style: none; margin: 0; padding: 0; font-family: var(--font-mono); font-size: 13px; }
-.contact-list li {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--rule);
-  align-items: baseline;
-}
-.contact-list .label {
-  color: var(--ink-mute);
-  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-}
-.contact-list a { color: var(--ink); text-decoration: none; transition: color 180ms; }
-.contact-list a:hover { color: var(--cobalt); }
-
-/* ---- Footer --------------------------------------------- */
-.site-footer {
-  position: relative; z-index: 10;
-  margin: 80px auto 0;
-  padding: 32px var(--gutter) 48px;
-  border-top: 1px solid var(--rule);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-mute);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 24px;
-  max-width: 1640px;
-}
-.site-footer-meta { display: flex; gap: 28px; flex-wrap: wrap; }
-.site-footer a { color: var(--ink-mute); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
-.site-footer a:hover { color: var(--cobalt); border-color: var(--cobalt); }
-@media (max-width: 720px) { .site-footer { grid-template-columns: 1fr; } }
-
-/* ---- Focus states --------------------------------------- */
-:focus { outline: none; }
-a:focus-visible, button:focus-visible {
-  outline: 2px solid var(--cobalt);
-  outline-offset: 4px;
-  border-radius: 1px;
-}
-
-/* ---- Mobile adjustments --------------------------------- */
-@media (max-width: 720px) {
-  :root { --header-h: 60px; }
-  .site-nav { gap: 14px; font-size: 10px; }
-  .hero {
-    grid-template-columns: 1fr;
-    padding-top: calc(var(--header-h) + 36px);
-    min-height: auto;
-  }
-  .hero-availability { grid-column: 1; grid-row: 1; }
-  .hero-meta { grid-column: 1; grid-row: 2; padding: 22px 20px 20px; margin-bottom: 10px; }
-  .hero-title { grid-column: 1; grid-row: 3; font-size: clamp(56px, 18vw, 120px); }
-  .hero-tag { grid-column: 1; grid-row: 4; }
-  .hero-stack { grid-column: 1; grid-row: 5; grid-template-columns: 1fr; gap: 4px 0; padding-top: 20px; }
-  .hero-stack dt { padding-top: 14px; }
-  .hero-stack dt:first-child { padding-top: 0; }
-  .hero-cta { grid-column: 1; grid-row: 6; flex-direction: column; align-items: flex-start; gap: 16px; }
-  .section-meta, .section-frame { grid-template-columns: 1fr; gap: 14px; }
-  .section-meta { margin-bottom: 14px; }
-  .section-frame { margin-bottom: 36px; }
-  .section-number { padding-top: 0; }
-  .section-frame-empty { display: none; }
-  .section { padding: 80px 0 64px; }
-}
-
-/* ---- Reduced motion ------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 140ms !important;
-  }
-  .hero-title .glyph {
-    color: var(--ink);
-    -webkit-text-stroke: 0;
-    clip-path: none;
-  }
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
+  <a class="skip-link" href="#work">Skip to work</a>
 
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <filter id="bp-noise">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
-        <feColorMatrix values="0 0 0 0 0.06  0 0 0 0 0.06  0 0 0 0 0.06  0 0 0 0.09 0"/>
-      </filter>
-      <rect width="100%" height="100%" filter="url(#bp-noise)"/>
-    </svg>
-  </div>
-  <div class="cursor" aria-hidden="true"></div>
-
-  <header class="site-header">
-    <a href="#" class="brand" aria-label="Raghav Dheri, home">
-      <span class="brand-section">§</span>
+  <!-- ============ MASTHEAD ============ -->
+  <header class="masthead" id="top">
+    <a class="brand" href="#top" aria-label="Raghav Dheri — home">
+      <span class="brand-glyph" aria-hidden="true">✳</span>
       <span class="brand-name">Raghav Dheri</span>
     </a>
-    <nav class="site-nav" aria-label="Primary">
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
+    <p class="masthead-tag" aria-hidden="true">Software Engineer</p>
+    <nav class="masthead-nav" aria-label="Primary">
+      <a href="#work"><span class="n">01</span>Work</a>
+      <a href="#experience"><span class="n">02</span>Experience</a>
+      <a href="#about"><span class="n">03</span>About</a>
+      <a href="#contact"><span class="n">04</span>Contact</a>
+      <button class="toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <span class="toggle-dot" aria-hidden="true"></span>
+        <span class="toggle-label" aria-hidden="true">Light</span>
+      </button>
     </nav>
   </header>
 
-  <aside class="rail" aria-hidden="true">
-    <div class="rail-entry" data-rail="hero" data-active>·</div>
-    <div class="rail-line">
-      <span class="rail-tick" style="top: 0%"></span>
-      <span class="rail-tick" style="top: 20%"></span>
-      <span class="rail-tick" style="top: 40%"></span>
-      <span class="rail-tick" style="top: 60%"></span>
-      <span class="rail-tick" style="top: 80%"></span>
-      <span class="rail-tick" style="top: 100%"></span>
-    </div>
-    <div class="rail-entry" data-rail="about">§01</div>
-    <div class="rail-entry" data-rail="experience">§02</div>
-    <div class="rail-entry" data-rail="projects">§03</div>
-    <div class="rail-entry" data-rail="outside">§04</div>
-    <div class="rail-entry" data-rail="contact">§05</div>
-  </aside>
+  <main>
 
-  <main id="main">
+    <!-- ============ COVER / HERO ============ -->
+    <section class="cover" aria-labelledby="cover-h">
+      <div class="cover-inner">
+        <div class="cover-text">
+          <span class="kicker"><span class="kicker-dot"></span>Open to New Opportunities · Boston, MA </span>
+          <h1 class="cover-h" id="cover-h"><span class="cl"><span class="ci"> Software</span></span><span class="cl"><span class="ci"><em>&nbsp;Engineer.</em></span></span></h1>
+          <p class="cover-hook">
+            I love building and solving problems&nbsp;— <strong>one prompt at a time.</strong>
+          </p>
+          <div class="cover-cta">
+            <a class="link-strong" href="#work">See the work <span aria-hidden="true">→</span></a>
+            <a class="link-quiet" href="https://github.com/rdheri" target="_blank" rel="noopener">GitHub</a>
+            <a class="link-quiet" href="https://linkedin.com/in/raghav-dheri" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="link-quiet" href="mailto:dheriraghav@gmail.com">Email</a>
+          </div>
+        </div>
 
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-availability">Open to new-grad roles · Starting June 2026</div>
-
-      <div class="hero-meta" aria-label="Spec sheet">
-        <dl>
-          <dt>Role</dt>       <dd>Software Engineer</dd>
-          <dt>Program</dt>    <dd>B.S. CS + Applied Math &amp; Stats</dd>
-          <dt>Institution</dt><dd>Stony Brook University</dd>
-          <dt>Graduating</dt> <dd>May 2026</dd>
-          <dt>GPA</dt>        <dd class="accent">3.55 / 4.00</dd>
-          <dt>Based</dt>      <dd>New York, NY</dd>
-          <dt>Status</dt>     <dd class="accent">Open to new-grad SWE</dd>
-        </dl>
+        <figure class="cover-portrait">
+          <div class="cover-portrait-img">
+            <img src="profile-pic.jpeg" width="800" height="800" alt="Raghav Dheri" fetchpriority="high">
+          </div>
+          <figcaption><span>Raghav Dheri</span><span>Boston · 2026</span></figcaption>
+        </figure>
       </div>
 
-      <h1 class="hero-title" id="hero-title">
-        <span class="sr-only">Raghav Dheri</span>
-        <span class="word" aria-hidden="true">
-          <span class="glyph" style="--i:0">R</span><span class="glyph" style="--i:1">a</span><span class="glyph" style="--i:2">g</span><span class="glyph" style="--i:3">h</span><span class="glyph" style="--i:4">a</span><span class="glyph" style="--i:5">v</span>
-        </span>
-        <span class="word" aria-hidden="true">
-          <span class="glyph" style="--i:6">D</span><span class="glyph" style="--i:7">h</span><span class="glyph" style="--i:8">e</span><span class="glyph" style="--i:9">r</span><span class="glyph" style="--i:10">i</span>
-        </span>
-      </h1>
-
-      <div class="hero-callouts" aria-hidden="true">
-        <span class="callout" data-k="cap"><span class="leader"></span>cap-height</span>
-        <span class="callout" data-k="base">baseline<span class="leader"></span></span>
-        <span class="callout" data-k="track">tracking −0.045em</span>
-        <span class="callout" data-k="wght">wght <span id="wght-readout">500</span></span>
-      </div>
-
-      <p class="hero-tag">
-        I love building things and solving problems, <strong>1 prompt at a time</strong>.
-      </p>
-
-      <dl class="hero-stack">
-        <dt>Languages</dt>
-        <dd>
-          <span class="stack-accent">Java · TypeScript · Python · Swift · C</span> · SQL · HTML/CSS · Bash
-        </dd>
-        <dt>Frameworks &amp; Infra</dt>
-        <dd>React · Next.js · Node.js · Express · Spring Boot · Docker · Jenkins · AWS · CI/CD · Git</dd>
-        <dt>Databases</dt>
-        <dd>PostgreSQL · MongoDB · Redis</dd>
-        <dt>AI Tools &amp; SDKs</dt>
-        <dd><span class="stack-accent">Cursor AI · Claude Code · GitHub Copilot</span> · Gemini · LangChain · Groq</dd>
+      <dl class="spec" aria-label="Quick facts">
+        <div><dt>Role</dt><dd>Software Engineer</dd></div>
+        <div><dt>School</dt><dd>Stony Brook — Computer Science + Applied Math and Statistics</dd></div>
+        <div><dt>Class</dt><dd>2026 · GPA: 3.60 · Cum Laude</dd></div>
+        <div><dt>Works in</dt><dd>React · Node · TypeScript · Python · Go</dd></div>
       </dl>
-
-      <div class="hero-cta">
-        <a href="#projects" class="primary" data-cursor="link">View projects <span class="arr">↓</span></a>
-        <a href="https://linkedin.com/in/raghav-dheri" data-cursor="link" target="_blank" rel="noopener">LinkedIn <span class="arr">↗</span></a>
-      </div>
     </section>
 
-    <!-- §01 ABOUT -->
-    <section class="section" id="about" aria-labelledby="about-title">
-      <div class="section-meta">
-        <div class="section-number">§ 01 / About</div>
-        <h2 class="section-title" id="about-title">Software Engineer. Problem Solver.</h2>
-      </div>
-      <div class="section-frame">
-        <div class="section-frame-empty"></div>
-        <p class="section-frame-text">
-          Graduating May 2026. Double major in CS + Applied Math &amp; Statistics. Past internship experiences (2x), research experience, and teaching experiences, all detailed below in §02.
-        </p>
-      </div>
+    <!-- ============ STATEMENT BAND (ink) ============ -->
+    <section class="band" aria-label="How I work">
+      <p class="band-quote">
+        I went from coding every line by hand to leveraging AI to build at 10x speed.
+        The instinct never changed&nbsp;— break it apart, figure out how it works, <em>ship it.</em>
+      </p>
+    </section>
 
-      <div class="about-grid">
+    <!-- ============ WORK ============ -->
+    <section class="chapter" id="work" aria-labelledby="work-title">
+      <div class="chapter-head">
+        <span class="chapter-no">01</span>
         <div>
-          <p class="about-lede">CS + Applied Math &amp; Statistics at Stony Brook. Graduating May 2026. Based in NYC.</p>
-          <p class="about-body">
-            I fall in love with the problem before the solution. I gravitate towards building tools that solve real-world problems, and I love using AI to speed up tasks along the way.
-          </p>
-          <p class="about-body">
-            I picked up robotics in fifth grade and never really put it down. The tools have changed, but the instinct to take something apart to see how it works hasn't.
-          </p>
+          <h2 class="chapter-title" id="work-title">Stuff I've built</h2>
         </div>
+      </div>
 
-        <div>
-          <figure class="about-portrait">
-            <div class="about-portrait-frame">
-              <img src="profile-pic.jpeg" alt="Raghav Dheri" loading="lazy" />
-            </div>
-            <figcaption class="about-portrait-caption">
-              <span class="l">fig. 01 / Raghav Dheri</span>
-              <span class="r">New York, NY</span>
-            </figcaption>
+      <!-- live warm-up: the interactive consensus -->
+      <div class="warmup" aria-label="Warm-up demo">
+        <div class="warmup-copy">
+          <span class="warmup-label">Warm-up</span>
+          <p>This is how my distributed projects stay in agreement. Knock a node offline — as long as most of them are up, the system keeps working. Drop too many and it stalls.</p>
+        </div>
+        <figure class="consensus" aria-label="An interactive five-node cluster. A majority must be online to reach quorum.">
+          <div class="consensus-nodes" id="consensus-nodes" role="group" aria-label="Cluster nodes — click to drop or restore one"></div>
+          <figcaption class="consensus-read" id="consensus-read"></figcaption>
+        </figure>
+      </div>
+
+      <div class="filters" id="filters" role="group" aria-label="Filter projects by theme">
+        <button class="chip is-active" data-filter="all" type="button">Everything</button>
+        <button class="chip" data-filter="live" type="button">Try it live</button>
+        <button class="chip" data-filter="fullstack" type="button">Full-stack</button>
+        <button class="chip" data-filter="ai" type="button">AI</button>
+        <button class="chip" data-filter="systems" type="button">Systems</button>
+        <button class="chip" data-filter="tooling" type="button">Tooling</button>
+      </div>
+
+      <ol class="works">
+
+        <!-- 1 · Distributed Task Queue -->
+        <li class="work work-live" id="p-dtq" data-themes="live systems fullstack">
+          <div class="work-text">
+            <div class="work-top"><span class="work-no">01</span><span class="work-kind">Go · Raft · PostgreSQL · React</span></div>
+            <h3 class="work-title">Distributed Task Queue</h3>
+            <p class="work-line">A job queue that runs every task <em>exactly once</em>, even when a server dies.</p>
+            <p class="work-desc">
+              I wrote this in Go on top of Raft. A handful of servers stay in agreement so every job runs
+              once and only once, even if the machine running it falls over halfway through. I pushed it to
+              8,500+ jobs a second and wrote tests that crash nodes on purpose to prove nothing
+              gets lost or duplicated. Go ahead and kill the leader yourself! It'll elect a new one and keep going.
+            </p>
+            <ul class="metrics"><li><b>8,500+</b><span>jobs / sec</span></li><li><b>exactly-once</b><span>delivery</span></li><li><b>0</b><span>lost on failure</span></li></ul>
+            <ul class="stack"><li>Go</li><li>Raft</li><li>PostgreSQL</li><li>Docker</li><li>Prometheus</li><li>Grafana</li></ul>
+            <div class="work-links"><a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a></div>
+          </div>
+          <figure class="plate" aria-label="Live: a Raft cluster committing jobs and surviving leader failure">
+            <figcaption class="plate-cap"><span class="plate-dot"></span>live — break it</figcaption>
+            <div class="plate-body" data-mount="dtq"></div>
           </figure>
+        </li>
 
-          <div class="about-side-label">Honors &amp; details</div>
-          <ul class="about-facts">
-            <li>
-              <span class="k">Honors</span>
-              <span class="v">University Scholarship for Academic Excellence. Dean's List (6x).</span>
-            </li>
-            <li>
-              <span class="k">Languages spoken</span>
-              <span class="v">English, Hindi, Punjabi, some Spanish.</span>
-            </li>
-            <li>
-              <span class="k">Also relevant</span>
-              <span class="v">Teaching Assistant (2x), Peer Tutor, Hall Council President.</span>
-            </li>
-          </ul>
-        </div>
-      </div>
+        <!-- 2 · Settle -->
+        <li class="work work-live" id="p-settle" data-themes="live fullstack systems">
+          <div class="work-text">
+            <div class="work-top"><span class="work-no">02</span><span class="work-kind">TypeScript · Node · PostgreSQL · React</span></div>
+            <h3 class="work-title">Settle: <span class="title-sub">a Full Stack Financial Ledger Platform</span></h3>
+            <p class="work-line">A double-entry ledger that never loses or duplicates a cent.</p>
+            <p class="work-desc">
+              This is the way banks actually track money. Every debit has a matching credit, so the books
+              can never quietly drift. I built the service in Node and Postgres and a React dashboard on top
+              of it. The fun part was the failure testing: I simulated crashes and dropped requests mid-payment,
+              over a hundred times, and it never drifted or double-charged anyone. Try crashing it yourself!
+            </p>
+            <ul class="metrics"><li><b>2,800+</b><span>concurrent ops</span></li><li><b>$0.00</b><span>drift, ever</span></li><li><b>100+</b><span>crash tests</span></li></ul>
+            <ul class="stack"><li>TypeScript</li><li>React</li><li>Node.js</li><li>PostgreSQL</li><li>Docker</li></ul>
+            <div class="work-links"><a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a></div>
+          </div>
+          <figure class="plate" aria-label="Live: a double-entry ledger that stays balanced through injected crashes">
+            <figcaption class="plate-cap"><span class="plate-dot"></span>live — break it</figcaption>
+            <div class="plate-body" data-mount="settle"></div>
+          </figure>
+        </li>
+
+        <!-- 3 · Converge -->
+        <li class="work work-live" id="p-converge" data-themes="live fullstack">
+          <div class="work-text">
+            <div class="work-top"><span class="work-no">03</span><span class="work-kind">TypeScript · React · WebSocket · Node</span></div>
+            <h3 class="work-title">Converge: <span class="title-sub">Real-Time Collaborative Editor</span></h3>
+            <p class="work-line">Google-Docs-style editing — and I wrote the merge engine myself.</p>
+            <p class="work-desc">
+              A real-time collaborative editor built on a CRDT I wrote in TypeScript. Two people can type at
+              the exact same time, or go offline and come back, and it always reconciles to the same document with
+              no conflicts. The server keeps 100+ people in sync over WebSockets and reconnects
+              on its own. Type in both boxes on the right and watch them converge!
+            </p>
+            <ul class="metrics"><li><b>100+</b><span>live editors</span></li><li><b>0</b><span>lost edits</span></li><li><b>offline</b><span>and back</span></li></ul>
+            <ul class="stack"><li>TypeScript</li><li>React</li><li>Node.js</li><li>WebSocket</li><li>PostgreSQL</li></ul>
+            <div class="work-links"><a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a></div>
+          </div>
+          <figure class="plate" aria-label="Live: two replicas editing concurrently and converging to one document">
+            <figcaption class="plate-cap"><span class="plate-dot"></span>live — try it</figcaption>
+            <div class="plate-body" data-mount="converge"></div>
+          </figure>
+        </li>
+
+        <!-- 4 · P4SBU -->
+        <li class="work work-feature" id="p-p4sbu" data-themes="fullstack">
+          <div class="work-text">
+            <div class="work-top"><span class="work-no">04</span><span class="work-kind">React · Node · MongoDB · Neo4j · Stripe</span></div>
+            <h3 class="work-title">P4SBU: <span class="title-sub">Parking Management System</span></h3>
+            <p class="work-line">A full-stack platform deployed to 17,000+ Stony Brook students.</p>
+            <p class="work-desc">
+              I led a team of four and built this platform end-to-end, from the database all the way to the admin
+              dashboard. Students search, get directions to, reserve, and pay for parking across 20+ lots in
+              real time. A few parts were genuinely tricky, and I'm proud of how they turned out:
+            </p>
+            <ul class="feature-grid">
+              <li><span class="feat-k">Payments</span><span class="feat-v">Stripe end-to-end — multiple methods, automatic refunds, and PCI / FERPA-compliant encryption.</span></li>
+              <li><span class="feat-k">Directions</span><span class="feat-v">Dijkstra shortest-path routing wired straight into the Google Maps API.</span></li>
+              <li><span class="feat-k">No double-booking</span><span class="feat-v">Real-time spot-locking so two people can't grab the same space.</span></li>
+              <li><span class="feat-k">Who sees what</span><span class="feat-v">Role-based access for students, faculty, and admins.</span></li>
+              <li><span class="feat-k">Admin tools</span><span class="feat-v">A dashboard with live occupancy and usage analytics.</span></li>
+              <li><span class="feat-k">Scale</span><span class="feat-v">17,000+ users, 20+ lots, reservations under 200ms.</span></li>
+            </ul>
+            <ul class="stack"><li>React</li><li>Node.js</li><li>Express</li><li>Python</li><li>MongoDB</li><li>Neo4j</li><li>Stripe</li><li>Google Maps</li></ul>
+            <div class="work-links">
+              <a href="https://cse416-client.onrender.com/" target="_blank" rel="noopener">Live demo <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+          <figure class="plate plate-static" aria-label="Architecture diagram of the P4SBU platform">
+            <figcaption class="plate-cap"><span class="plate-dot"></span>how it's wired</figcaption>
+            <div class="plate-body arch" data-mount="arch"></div>
+          </figure>
+        </li>
+
+        <!-- 5 · DevLens AI -->
+        <li class="work work-card" id="p-devlens" data-themes="ai fullstack">
+          <div class="work-text">
+            <div class="work-top"><span class="work-no">05</span><span class="work-kind">Next.js · Groq · GitHub API</span></div>
+            <h3 class="work-title">DevLens AI</h3>
+            <p class="work-line">Point it at any GitHub profile and it reads the code.</p>
+            <p class="work-desc">
+              I used Llama 3.3 on Groq to analyze 50+ GitHub repositories and return comprehensive feedback on a developer's work.
+              This includes their strengths, what they actually ship, even a side-by-side comparison in under 15 seconds.
+              Next.js front to back, deployed on Vercel, with PDF export.
+            </p>
+            <ul class="metrics"><li><b>50+</b><span>repos read</span></li><li><b>&lt;15s</b><span>full report</span></li></ul>
+            <ul class="stack"><li>Next.js</li><li>TypeScript</li><li>Groq / Llama 3.3</li><li>GitHub API</li><li>Vercel</li></ul>
+            <div class="work-links">
+              <a href="https://devlens-ai.vercel.app/" target="_blank" rel="noopener">Live demo <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </li>
+
+        <!-- 6 · StressKit -->
+        <li class="work work-card" id="p-stresskit" data-themes="tooling systems">
+          <div class="work-text">
+            <div class="work-top"><span class="work-no">06</span><span class="work-kind">Python · asyncio · PyPI</span></div>
+            <h3 class="work-title">StressKit</h3>
+            <p class="work-line">A little CLI I built to hammer APIs and find where they break.</p>
+            <p class="work-desc">
+              Configurable concurrency, latency percentiles, throughput. The async engine holds
+              1,000+ requests a second. I wrote 56 tests and a CI pipeline so the tool itself stays honest,
+              then published it to PyPI so anyone can <code>pip install</code> it.
+            </p>
+            <ul class="metrics"><li><b>1,000+</b><span>req / sec</span></li><li><b>56</b><span>tests</span></li><li><b>PyPI</b><span>shipped</span></li></ul>
+            <ul class="stack"><li>Python</li><li>asyncio</li><li>aiohttp</li><li>Typer</li><li>Rich</li><li>Pydantic</li></ul>
+            <div class="work-links">
+              <a href="https://pypi.org/project/stresskit/" target="_blank" rel="noopener">PyPI <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </li>
+
+      </ol>
     </section>
 
-    <!-- §02 EXPERIENCE -->
-    <section class="section" id="experience" aria-labelledby="experience-title">
-      <div class="section-meta">
-        <div class="section-number">§ 02 / Experience</div>
-        <h2 class="section-title" id="experience-title">Places where I worked on real-world problems.</h2>
-      </div>
-      <div class="section-frame">
-        <div class="section-frame-empty"></div>
-        <p class="section-frame-text">
-          Eight roles over the past two years. Two software engineering internships, a research assistantship, two teaching assistantships, a peer tutoring role, a student-team project, and a residential leadership role. Different focus areas, different settings, real contributions in every one.
-        </p>
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="chapter" id="experience" aria-labelledby="exp-title">
+      <div class="chapter-head">
+        <span class="chapter-no">02</span>
+        <div>
+          <h2 class="chapter-title" id="exp-title">Where I've worked</h2>
+        </div>
       </div>
 
-      <ol class="experience-list">
-
-        <li class="experience">
-          <div class="exp-date">Jun – Aug 2025</div>
+      <ol class="exp-list">
+        <li class="exp">
+          <div class="exp-when">2023 — now</div>
+          <div class="exp-body">
+            <h3 class="exp-role">Founder</h3>
+            <p class="exp-org">Kaya — AI-powered rental management</p>
+            <p class="exp-desc">I started Kaya and I'm still building it: a full-stack platform for managing rentals, with AI integration into the dashboards. It's handled <strong>$5M in assets</strong> so far. First time taking something from a half-formed idea all the way to a product people actually rely on, and I've learned a ton doing it.</p>
+            <ul class="stack"><li>Full-stack</li><li>AI dashboards</li><li>Product</li></ul>
+          </div>
+        </li>
+        <li class="exp">
+          <div class="exp-when">Jun – Aug 2025</div>
           <div class="exp-body">
             <h3 class="exp-role">Software Engineer Intern</h3>
             <p class="exp-org">Genpact · Remote</p>
-            <div class="exp-narrative">
-              <p>On the first project, I developed multiple web scrapers in Python using Selenium and BeautifulSoup to automate data collection and PDF content extraction from various multilingual websites. I also used OpenPyXL to organize the scraped data into Excel reports.</p>
-              <p>For the second project, I led the development of a Retrieval-Augmented Generation (RAG) based Financial Recommendation System using Python and Ollama LLM. Users can input financial data, get concise summaries of key insights, ask context-aware questions, and receive results powered by vector-indexed retrieval, along with auto-generated tables and visualizations for clearer insights.</p>
-            </div>
-            <ul class="exp-stack">
-              <li>Python</li><li>RAG</li><li>Ollama</li><li>Selenium</li><li>BeautifulSoup</li><li>OpenPyXL</li>
-            </ul>
-          </div>
-          <div class="exp-aside">
-            <dl>
-              <dt>Focus</dt>    <dd>AI / Data Engineering</dd>
-              <dt>Format</dt>   <dd>Remote</dd>
-              <dt>Duration</dt> <dd>12 weeks</dd>
-            </dl>
+            <p class="exp-desc">I automated a data pipeline that used to take four hours a day, every single day. I used Python and FastAPI, with retries, validation, and Slack alerts to reduce downstream data failures. I also built a RAG system over 1,500+ financial documents that answers questions with actual citations, working alongside four teams of 15+ engineers.</p>
+            <ul class="stack"><li>Python</li><li>FastAPI</li><li>RAG</li><li>LLMs</li></ul>
           </div>
         </li>
-
-        <li class="experience">
-          <div class="exp-date">Aug 2024 – May 2025</div>
+        <li class="exp">
+          <div class="exp-when">Jun – Aug 2024</div>
+          <div class="exp-body">
+            <h3 class="exp-role">Software Engineer Intern</h3>
+            <p class="exp-org">Falcon Technologies · New Delhi</p>
+            <p class="exp-desc">I worked on payment microservices in Java and Spring Boot. I added async processing that cut transaction latency by 20%, plus a real-time Kafka analytics pipeline and OAuth2-secured APIs. I also set up the Jenkins CI/CD pipeline, which pushed our test coverage from 60% up to 88%.</p>
+            <ul class="stack"><li>Java</li><li>Spring Boot</li><li>Kafka</li><li>Jenkins</li></ul>
+          </div>
+        </li>
+        <li class="exp">
+          <div class="exp-when">Aug 2024 – May 2025</div>
           <div class="exp-body">
             <h3 class="exp-role">Research Assistant</h3>
-            <p class="exp-org">NetSys Lab, Stony Brook University</p>
-            <div class="exp-narrative">
-              <p>I integrated IMU sensor data into ML algorithms and built an iOS gesture-recognition application for visually impaired users, achieving 92% accuracy across all supported gestures. The goal was to make the phone navigable without looking at the screen.</p>
-              <p>I then collaborated with the therapy department to run a 12-participant user study, which helped us refine the model further. Retraining on the expanded dataset brought false positives down from 16 per hour to under 4.</p>
-            </div>
-            <ul class="exp-stack">
-              <li>Swift</li><li>Core ML</li><li>iOS</li><li>watchOS</li><li>Sensor pipelines</li>
-            </ul>
-          </div>
-          <div class="exp-aside">
-            <dl>
-              <dt>Focus</dt>    <dd>iOS + ML</dd>
-              <dt>Setting</dt>  <dd>Research Lab</dd>
-              <dt>Users</dt>    <dd>Accessibility</dd>
-            </dl>
+            <p class="exp-org">AccessWear Lab · Stony Brook University</p>
+            <p class="exp-desc">I built a gesture-recognition app that lets visually-impaired users control a phone without ever looking at it. Apple Watch sensors, 70%+ accuracy, 57ms latency, on both iOS and Android. Then I ran a 20-person study with the therapy department that bumped accuracy up another 17%.</p>
+            <ul class="stack"><li>Swift</li><li>Core ML</li><li>iOS / Android</li><li>Sensors</li></ul>
           </div>
         </li>
-
-        <li class="experience">
-          <div class="exp-date">Aug – Dec 2024</div>
+        <li class="exp exp-cluster">
+          <div class="exp-when">2023 – 2025</div>
           <div class="exp-body">
-            <h3 class="exp-role">Teaching Assistant, Multivariable Calculus III</h3>
-            <p class="exp-org">AMS 261, Stony Brook University</p>
-            <div class="exp-narrative">
-              <p>I led weekly recitation sessions for 25+ students, running targeted problem-solving workshops and holding 1:1 office hours for anyone stuck on vector fields, Lagrange multipliers, or the usual suspects. I also worked with faculty on designing assessments and grading exams, keeping evaluation consistent across course sections.</p>
-              <p>One of the things I enjoyed most was building visual learning aids for the 3D concepts that trip most students up. Multivariable optimization and vector analysis get a lot easier once you can see them. My section's average grade ended up about 15% higher than prior semesters.</p>
-            </div>
-            <ul class="exp-stack">
-              <li>Multivariable Calculus</li><li>Vector Analysis</li><li>Mentoring</li><li>Curriculum Design</li>
+            <h3 class="exp-role">Teaching &amp; leadership</h3>
+            <p class="exp-org">Stony Brook University</p>
+            <ul class="cluster-list">
+              <li><span>Teaching Assistant</span> — Object-Oriented Programming, Data Structures &amp; Algorithms (CSE 214), and Multivariable Calculus (AMS 261). Honestly some of my favorite work.</li>
+              <li><span>Peer Tutor</span> — Linear Algebra &amp; Calculus II, one-on-one.</li>
+              <li><span>VIP Team Lead</span> — co-led five engineers building a Gemini-AI Chrome extension.</li>
+              <li><span>Hall Council President</span> — led nine people serving 300+ residents.</li>
             </ul>
           </div>
-          <div class="exp-aside">
-            <dl>
-              <dt>Focus</dt>   <dd>Teaching</dd>
-              <dt>Cohort</dt>  <dd>25+ students</dd>
-              <dt>Course</dt>  <dd>AMS 261</dd>
-            </dl>
-          </div>
         </li>
-
-        <li class="experience">
-          <div class="exp-date">Jun – Aug 2024</div>
-          <div class="exp-body">
-            <h3 class="exp-role">Software Developer Intern</h3>
-            <p class="exp-org">Falcon Technologies · New Delhi, India</p>
-            <div class="exp-narrative">
-              <p>My main project was a distributed payment processing system in Java and Spring Boot. I worked on the microservice decomposition that let us handle 3,000+ requests per second, and used async processing and backpressure to cut transaction latency by around 15% across the three services we touched.</p>
-              <p>On the infrastructure side, I set up a Jenkins CI/CD pipeline from scratch with automated unit testing, which raised test coverage from 60% to 88% and meaningfully shortened our merge-to-production cycle.</p>
-            </div>
-            <ul class="exp-stack">
-              <li>Java</li><li>Spring Boot</li><li>Jenkins</li><li>Microservices</li><li>JUnit</li>
-            </ul>
-          </div>
-          <div class="exp-aside">
-            <dl>
-              <dt>Focus</dt>     <dd>Fintech / Infra</dd>
-              <dt>Throughput</dt><dd>3k req/s</dd>
-              <dt>Duration</dt>  <dd>10 weeks</dd>
-            </dl>
-          </div>
-        </li>
-
-        <li class="experience">
-          <div class="exp-date">Jan – May 2024</div>
-          <div class="exp-body">
-            <h3 class="exp-role">VIP Team Member, Chrome Extension &amp; AI</h3>
-            <p class="exp-org">Vertically Integrated Projects, Stony Brook University</p>
-            <div class="exp-narrative">
-              <p>Co-led a 5-person team building a Chrome extension that integrates Gemini AI into students' workflows. The idea was to surface instant AI-powered insights wherever they were already working, without the context switch of opening another tab.</p>
-              <p>I focused on the full-stack architecture using React, Tailwind CSS, and the Chrome APIs, and shipped the context-menu and side-panel functionality end-to-end. Integrating the Gemini API came with its own performance and responsiveness challenges, which made me a lot more careful about writing clean code.</p>
-            </div>
-            <ul class="exp-stack">
-              <li>React</li><li>Tailwind CSS</li><li>Chrome APIs</li><li>Gemini API</li>
-            </ul>
-          </div>
-          <div class="exp-aside">
-            <dl>
-              <dt>Focus</dt>   <dd>Full-stack / AI</dd>
-              <dt>Team</dt>    <dd>Co-lead of 5</dd>
-              <dt>Ships</dt>   <dd>Chrome extension</dd>
-            </dl>
-          </div>
-        </li>
-
-        <li class="experience">
-          <div class="exp-date">Jan – May 2024</div>
-          <div class="exp-body">
-            <h3 class="exp-role">Teaching Assistant, Data Structures &amp; Algorithms</h3>
-            <p class="exp-org">CSE 214, Stony Brook University</p>
-            <div class="exp-narrative">
-              <p>I led weekly algorithm workshops for 35+ students, covering dynamic programming, graph algorithms, tree traversals, and complexity analysis. Basically everything they'd actually see in a tech interview. I redesigned the recitation around live coding and interactive labs rather than lecture-style review, designing coding exercises around binary search trees, shortest paths, and recursion.</p>
-              <p>By the end of the semester, attendance was up 20% and average quiz scores were up 30%.</p>
-            </div>
-            <ul class="exp-stack">
-              <li>Java</li><li>Algorithms</li><li>Data Structures</li><li>Mentoring</li>
-            </ul>
-          </div>
-          <div class="exp-aside">
-            <dl>
-              <dt>Focus</dt>   <dd>Teaching</dd>
-              <dt>Cohort</dt>  <dd>35+ students</dd>
-              <dt>Course</dt>  <dd>CSE 214</dd>
-            </dl>
-          </div>
-        </li>
-
-        <li class="experience">
-          <div class="exp-date">Aug 2023 – Aug 2024</div>
-          <div class="exp-body">
-            <h3 class="exp-role">Peer Tutor, Linear Algebra &amp; Calculus II</h3>
-            <p class="exp-org">Stony Brook University · Hybrid</p>
-            <div class="exp-narrative">
-              <p>I tutored 7 students weekly in one-on-one sessions across linear algebra and calculus II, adapting how I explained things (differential equations, linear transformations, eigenvalues) to each person's learning style and background. Some students wanted intuition first. Others wanted to drill problems.</p>
-              <p>Across the cohort, students saw about a 40% average improvement in their course performance. Watching someone go from stuck to actually getting it is one of the most rewarding things I've done in college.</p>
-            </div>
-            <ul class="exp-stack">
-              <li>Linear Algebra</li><li>Calculus II</li><li>1:1 Mentoring</li><li>Problem Solving</li>
-            </ul>
-          </div>
-          <div class="exp-aside">
-            <dl>
-              <dt>Focus</dt>    <dd>Tutoring</dd>
-              <dt>Cadence</dt>  <dd>7 students, weekly</dd>
-              <dt>Duration</dt> <dd>1 year</dd>
-            </dl>
-          </div>
-        </li>
-
-        <li class="experience">
-          <div class="exp-date">Aug 2023 – Jan 2024</div>
-          <div class="exp-body">
-            <h3 class="exp-role">Hall Council President</h3>
-            <p class="exp-org">Stony Brook University Residential Programs</p>
-            <div class="exp-narrative">
-              <p>I led a 9-person council serving 300+ residents. My responsibilities included planning community events, allocating a $1,240 annual budget with full P&amp;L responsibility, and running the executive meetings. We focused on data-driven programming, which bumped engagement up about 30% over the previous year.</p>
-              <p>It was my first time managing a team of that size, and most of what I now know about running a small group (setting agendas, chairing meetings, making decisions quickly) came from this role.</p>
-            </div>
-            <ul class="exp-stack">
-              <li>Leadership</li><li>Budget Management</li><li>Event Planning</li><li>Agile Decision-Making</li>
-            </ul>
-          </div>
-          <div class="exp-aside">
-            <dl>
-              <dt>Focus</dt>    <dd>Leadership</dd>
-              <dt>Council</dt>  <dd>9 members</dd>
-              <dt>Residents</dt><dd>300+</dd>
-            </dl>
-          </div>
-        </li>
-
       </ol>
     </section>
 
-    <!-- §03 PROJECTS -->
-    <section class="section" id="projects" aria-labelledby="projects-title">
-      <div class="section-meta">
-        <div class="section-number">§ 03 / Projects</div>
-        <h2 class="section-title" id="projects-title">What I've built.</h2>
+    <!-- ============ ABOUT ============ -->
+    <section class="chapter" id="about" aria-labelledby="about-title">
+      <div class="chapter-head">
+        <span class="chapter-no">03</span>
+        <div><h2 class="chapter-title" id="about-title">A bit about me</h2></div>
       </div>
-      <div class="section-frame">
-        <div class="section-frame-empty"></div>
-        <p class="section-frame-text">
-          Seven projects. Three in production (P4SBU, DevLens AI, StressKit), four built to depth as course or personal work.
-        </p>
-      </div>
+      <div class="about">
+        <p class="about-lede">I picked up robotics in fifth grade and never really put it down. The tools have changed — but the instinct to take something apart just to see how it works hasn't.</p>
+        <div class="about-cols">
+          <p>I just finished my degree at Stony Brook — Computer Science and Applied Math &amp; Statistics, with an AI/DS specialization. I like building for real people: I'm just as happy fighting with a database as I am implementing real user feedback into our work.</p>
+          <p>Teaching DSA, algorithms, and calculus for a couple of years taught me the other half of the job — an idea isn't really finished until a 14-year old can look at it and get it. I try to write code, and explanations, that way.</p>
+        </div>
 
-      <ol class="projects">
-
-        <li class="project">
-          <div class="project-index">01 / 07</div>
-          <div class="project-body">
-            <div class="project-rev" aria-label="status: shipped, 17 thousand users">shipped · 17,000+ users</div>
-            <h3 class="project-title">P4SBU</h3>
-            <div class="project-sub">Parking for Stony Brook · full-stack · lead of 4</div>
-            <p class="project-desc">
-              I led a 4-person team building this full-stack parking platform end-to-end. It's now deployed to 17,000+ Stony Brook students, with real-time tracking and admin tools. The tricky parts were the dual-database architecture (MongoDB for reservations, Neo4j for the campus graph) and a three-layer AI conflict-resolution pipeline that handles reservation conflicts using Llama 3.3 on Groq. We load-tested reservation flows to 1,000+ concurrent requests at sub-200ms response, improved parking search efficiency by about 40% via AI occupancy forecasting and shortest-path routing, and integrated Stripe for payments.
-            </p>
-            <ul class="project-rev-log" aria-label="recent milestones">
-              <li>v2.0, three-layer AI conflict-resolution pipeline</li>
-              <li>v1.6, dual-database rollout, sub-200ms reservations</li>
-              <li>v1.0, shipped to 17k students</li>
-            </ul>
-            <ul class="project-stack" aria-label="stack">
-              <li>React</li><li>Node.js</li><li>MongoDB</li><li>Neo4j</li><li>Groq / Llama 3.3</li><li>Stripe</li><li>Python</li>
-            </ul>
-            <div class="project-links">
-              <a href="https://cse416-client.onrender.com/" target="_blank" rel="noopener" data-cursor="link">Live demo <span class="arr">↗</span></a>
-              <a href="https://github.com/rdheri" target="_blank" rel="noopener" data-cursor="link">Source <span class="arr">↗</span></a>
-            </div>
-          </div>
-          <div class="project-aside">
-            <dl>
-              <dt>Role</dt>  <dd>Lead full-stack</dd>
-              <dt>Team</dt>  <dd>4 engineers</dd>
-              <dt>Scale</dt> <dd>17k+ users</dd>
-              <dt>p95</dt>   <dd>&lt; 200 ms</dd>
-            </dl>
-          </div>
-        </li>
-
-        <li class="project">
-          <div class="project-index">02 / 07</div>
-          <div class="project-body">
-            <div class="project-rev" aria-label="status: live">live · Groq-powered</div>
-            <h3 class="project-title">DevLens AI</h3>
-            <div class="project-sub">Next.js · TypeScript · Groq AI · GitHub API</div>
-            <p class="project-desc">
-              I built DevLens AI as a responsive Next.js app that pulls data from the GitHub API to profile developers and surface analytics across their repositories. It uses Llama 3.3 70B via Groq to analyze 50+ repos per user and returns a full assessment in under 15 seconds. The dashboard includes skill visualizations, activity heatmaps, and a developer comparison view, plus PDF export for anyone who wants to share their report.
-            </p>
-            <ul class="project-rev-log" aria-label="recent milestones">
-              <li>v1.4, PDF export and LinkedIn share-copy</li>
-              <li>v1.2, IP-based rate limiting</li>
-              <li>v1.0, Groq / Llama 3.3 pipeline live</li>
-            </ul>
-            <ul class="project-stack" aria-label="stack">
-              <li>Next.js</li><li>TypeScript</li><li>Groq AI</li><li>GitHub API</li><li>Vercel</li>
-            </ul>
-            <div class="project-links">
-              <a href="https://devlens-ai.vercel.app/" target="_blank" rel="noopener" data-cursor="link">Live demo <span class="arr">↗</span></a>
-              <a href="https://github.com/rdheri" target="_blank" rel="noopener" data-cursor="link">Source <span class="arr">↗</span></a>
-            </div>
-          </div>
-          <div class="project-aside">
-            <dl>
-              <dt>Role</dt>   <dd>Solo</dd>
-              <dt>Deploy</dt> <dd>Vercel</dd>
-              <dt>p95</dt>    <dd>&lt; 15 s</dd>
-            </dl>
-          </div>
-        </li>
-
-        <li class="project">
-          <div class="project-index">03 / 07</div>
-          <div class="project-body">
-            <div class="project-rev" aria-label="status: published to pypi">published · pypi</div>
-            <h3 class="project-title">StressKit</h3>
-            <div class="project-sub">Python CLI · async load-testing · open source</div>
-            <p class="project-desc">
-              StressKit is a Python CLI I built for stress-testing APIs. It handles configurable concurrency, latency percentiles, and throughput analysis. The core async HTTP engine sustains 1,000+ requests per second and supports both bottleneck and regression testing. It ships with 56 unit tests, multi-format export, and a CI/CD pipeline so the tool itself stays reliable across repeated test runs.
-            </p>
-            <ul class="project-rev-log" aria-label="recent milestones">
-              <li>v1.0.3, PyPI release</li>
-              <li>v1.0.0, CI/CD pipeline, 56 tests passing</li>
-              <li>v0.1.0, async HTTP engine, 1k+ req/s sustained</li>
-            </ul>
-            <ul class="project-stack" aria-label="stack">
-              <li>Python</li><li>asyncio</li><li>aiohttp</li><li>Typer</li><li>Rich</li><li>Pydantic</li>
-            </ul>
-            <div class="project-links">
-              <a href="https://pypi.org/project/stresskit/" target="_blank" rel="noopener" data-cursor="link">PyPI <span class="arr">↗</span></a>
-              <a href="https://github.com/rdheri" target="_blank" rel="noopener" data-cursor="link">Source <span class="arr">↗</span></a>
-            </div>
-          </div>
-          <div class="project-aside">
-            <dl>
-              <dt>Role</dt>  <dd>Solo</dd>
-              <dt>Tests</dt> <dd>56 passing</dd>
-              <dt>Dist</dt>  <dd>PyPI</dd>
-            </dl>
-          </div>
-        </li>
-
-        <li class="project">
-          <div class="project-index">04 / 07</div>
-          <div class="project-body">
-            <div class="project-rev" aria-label="status: built, source on github">built · github</div>
-            <h3 class="project-title">CoCode</h3>
-            <div class="project-sub">Real-time collaborative code editor</div>
-            <p class="project-desc">
-              CoCode is a real-time collaborative code editor I built using Socket.io and Operational Transforms, the kind of conflict-free concurrent editing that powers Google Docs, but for code. On top of the editor I layered a Docker-based sandbox that can execute code in 7+ languages, and used container pooling to keep cold-starts from ruining the experience. It handles 50+ concurrent rooms at sub-100ms cursor sync.
-            </p>
-            <ul class="project-rev-log" aria-label="recent milestones">
-              <li>v1.2, multi-language sandbox (7+ runtimes)</li>
-              <li>v1.0, OT-based concurrent editing with room isolation</li>
-            </ul>
-            <ul class="project-stack" aria-label="stack">
-              <li>React</li><li>TypeScript</li><li>Socket.io</li><li>Docker</li><li>Redis</li><li>Node.js</li>
-            </ul>
-            <div class="project-links">
-              <a href="https://github.com/rdheri" target="_blank" rel="noopener" data-cursor="link">Source <span class="arr">↗</span></a>
-            </div>
-          </div>
-          <div class="project-aside">
-            <dl>
-              <dt>Role</dt>  <dd>Solo</dd>
-              <dt>Rooms</dt> <dd>50+ concurrent</dd>
-              <dt>Sync</dt>  <dd>&lt; 100 ms</dd>
-              <dt>Langs</dt> <dd>7+ sandboxed</dd>
-            </dl>
-          </div>
-        </li>
-
-        <li class="project">
-          <div class="project-index">05 / 07</div>
-          <div class="project-body">
-            <div class="project-rev" aria-label="status: built, source on github">built · github</div>
-            <h3 class="project-title">ExpensifyMe</h3>
-            <div class="project-sub">Personal-finance SaaS · Next.js 14 + Plaid</div>
-            <p class="project-desc">
-              ExpensifyMe is a personal finance dashboard I built on Next.js 14 with secure bank-account integration via Plaid. It has interactive dashboards, customizable charting, and multi-account support. I used Clerk for auth and Tanstack React Query for server-state management, with Hono.js and Drizzle ORM handling the data layer.
-            </p>
-            <ul class="project-rev-log" aria-label="recent milestones">
-              <li>v1.1, Plaid integration and live bank sync</li>
-              <li>v1.0, dashboards, charting, multi-account</li>
-            </ul>
-            <ul class="project-stack" aria-label="stack">
-              <li>Next.js 14</li><li>React</li><li>Hono.js</li><li>Drizzle ORM</li><li>Plaid</li><li>Clerk</li>
-            </ul>
-            <div class="project-links">
-              <a href="https://github.com/rdheri" target="_blank" rel="noopener" data-cursor="link">Source <span class="arr">↗</span></a>
-            </div>
-          </div>
-          <div class="project-aside">
-            <dl>
-              <dt>Role</dt>  <dd>Solo</dd>
-              <dt>Auth</dt>  <dd>Clerk</dd>
-              <dt>Data</dt>  <dd>Plaid</dd>
-            </dl>
-          </div>
-        </li>
-
-        <li class="project">
-          <div class="project-index">06 / 07</div>
-          <div class="project-body">
-            <div class="project-rev" aria-label="status: coursework, source on github">coursework · github</div>
-            <h3 class="project-title">Phreddit</h3>
-            <div class="project-sub">Reddit-style community platform · MERN</div>
-            <p class="project-desc">
-              Phreddit is a Reddit-style social platform I built on the MERN stack. Community creation, threaded comments, user profiles, the whole thing. I used JWT for authentication and CORS middleware for cross-origin handling, and load-tested the API through 1,000+ concurrent users at sub-100ms response.
-            </p>
-            <ul class="project-rev-log" aria-label="recent milestones">
-              <li>v1.0, multi-community platform with JWT auth</li>
-            </ul>
-            <ul class="project-stack" aria-label="stack">
-              <li>React</li><li>Node.js</li><li>Express</li><li>MongoDB</li><li>JWT</li>
-            </ul>
-            <div class="project-links">
-              <a href="https://github.com/rdheri" target="_blank" rel="noopener" data-cursor="link">Source <span class="arr">↗</span></a>
-            </div>
-          </div>
-          <div class="project-aside">
-            <dl>
-              <dt>Role</dt>  <dd>Solo</dd>
-              <dt>Stack</dt> <dd>MERN</dd>
-              <dt>p95</dt>   <dd>&lt; 100 ms</dd>
-            </dl>
-          </div>
-        </li>
-
-        <li class="project">
-          <div class="project-index">07 / 07</div>
-          <div class="project-body">
-            <div class="project-rev" aria-label="status: coursework, source on github">coursework · github</div>
-            <h3 class="project-title">Networked Chess</h3>
-            <div class="project-sub">Client-server chess engine in C</div>
-            <p class="project-desc">
-              A client-server chess engine I wrote in C, using POSIX sockets for real-time move synchronization at sub-50ms latency. It uses bitboard representation for the board state and supports full move validation plus FEN notation for position import/export.
-            </p>
-            <ul class="project-rev-log" aria-label="recent milestones">
-              <li>v1.0, sub-50ms client-server sync, full rule validation</li>
-            </ul>
-            <ul class="project-stack" aria-label="stack">
-              <li>C</li><li>POSIX Sockets</li><li>Bitboards</li><li>FEN</li>
-            </ul>
-            <div class="project-links">
-              <a href="https://github.com/rdheri" target="_blank" rel="noopener" data-cursor="link">Source <span class="arr">↗</span></a>
-            </div>
-          </div>
-          <div class="project-aside">
-            <dl>
-              <dt>Role</dt>    <dd>Solo</dd>
-              <dt>Latency</dt> <dd>&lt; 50 ms</dd>
-              <dt>Lang</dt>    <dd>C99</dd>
-            </dl>
-          </div>
-        </li>
-
-      </ol>
-    </section>
-
-    <!-- §04 OUTSIDE -->
-    <section class="section" id="outside" aria-labelledby="outside-title">
-      <div class="section-meta">
-        <div class="section-number">§ 04 / Outside</div>
-        <h2 class="section-title" id="outside-title">Things that aren't code.</h2>
-      </div>
-
-      <div class="outside-grid">
-        <article class="outside-item">
-          <div class="outside-idx">§ A / Piano</div>
-          <h3 class="outside-title">Fifteen years of playing the Piano.</h3>
-          <div class="outside-sub">Trinity College London · several certifications</div>
-          <p class="outside-body">
-            I've been playing the piano for over 15 years and have several certifications from Trinity College London!
-          </p>
-        </article>
-
-        <article class="outside-item">
-          <div class="outside-idx">§ B / Formula 1</div>
-          <h3 class="outside-title">Super Max!</h3>
-          <div class="outside-sub">Red Bull · Max Verstappen since '15</div>
-          <p class="outside-body">
-            Fun Fact: I haven't missed a single race since the start of the 2020 season!
-          </p>
-        </article>
-
-        <article class="outside-item">
-          <div class="outside-idx">§ C / Fitness</div>
-          <h3 class="outside-title">Best part of my day.</h3>
-          <div class="outside-sub">5x weekly · lifting &gt; cardio</div>
-          <p class="outside-body">
-            Working out is genuinely one of the best parts of my day. Whether it's lifting heavy (my favorite) or cardio (absolutely hate it), the discipline of showing up even when I don't feel like it translates directly into my mindset and approach to work.
-          </p>
-        </article>
-
-        <article class="outside-item">
-          <div class="outside-idx">§ D / Cooking</div>
-          <h3 class="outside-title">Always Cooking, Always Eating.</h3>
-          <div class="outside-sub">Indian foundation · everywhere else</div>
-          <p class="outside-body">
-            I love experimenting in the kitchen, from the Indian recipes my mom taught me growing up, to cuisines from all over the world I've been curious about. Good food brings people together, and that's the best part of cooking.
-          </p>
-        </article>
+        <div class="outside">
+          <p class="outside-label">Outside the terminal</p>
+          <ul class="outside-list">
+            <li><span class="out-k">Piano</span><span class="out-v">Fifteen years in, with a few Trinity College London certificates to show for it.</span></li>
+            <li><span class="out-k">Formula 1</span><span class="out-v">Haven't missed a race since 2020. Super Max. 🧡</span></li>
+            <li><span class="out-k">Lifting</span><span class="out-v">Best part of my day. Cardio I merely tolerate.</span></li>
+            <li><span class="out-k">Cooking</span><span class="out-v">Started with my mom's Indian recipes, now I'll try cooking just about anything.</span></li>
+          </ul>
+          <p class="outside-langs">I speak English, Hindi, and Punjabi — plus enough Spanish to get by.</p>
+        </div>
       </div>
     </section>
 
-    <!-- §05 CONTACT -->
-    <section class="section" id="contact" aria-labelledby="contact-title">
-      <div class="section-meta">
-        <div class="section-number">§ 05 / Contact</div>
-        <h2 class="section-title" id="contact-title">Get in touch.</h2>
-      </div>
-
-      <div class="contact-block">
-        <p class="contact-lede">
-          Looking for new-grad SWE roles starting summer 2026. LinkedIn is the best way to reach me.
-        </p>
-        <ul class="contact-list">
-          <li>
-            <span class="label">LinkedIn</span>
-            <a href="https://linkedin.com/in/raghav-dheri" target="_blank" rel="noopener" data-cursor="link">in/raghav-dheri <span class="arr">↗</span></a>
-          </li>
-          <li>
-            <span class="label">GitHub</span>
-            <a href="https://github.com/rdheri" target="_blank" rel="noopener" data-cursor="link">github.com/rdheri <span class="arr">↗</span></a>
-          </li>
-          <li>
-            <span class="label">References</span>
-            <span>Available on request.</span>
-          </li>
-        </ul>
-      </div>
+    <!-- ============ CONTACT (ink closer) ============ -->
+    <section class="closer" id="contact" aria-labelledby="contact-title">
+      <span class="chapter-no light">04</span>
+      <h2 class="closer-title" id="contact-title">Let's build<br>something.</h2>
+      <p class="closer-sub">I'm looking for a Software team to build with — available now, based in Boston, happy to work from anywhere. Email or LinkedIn is the fastest way to reach me.</p>
+      <ul class="closer-links">
+        <li><span>Email</span><a href="mailto:dheriraghav@gmail.com">dheriraghav@gmail.com <span aria-hidden="true">↗</span></a></li>
+        <li><span>LinkedIn</span><a href="https://linkedin.com/in/raghav-dheri" target="_blank" rel="noopener">in/raghav-dheri <span aria-hidden="true">↗</span></a></li>
+        <li><span>GitHub</span><a href="https://github.com/rdheri" target="_blank" rel="noopener">github.com/rdheri <span aria-hidden="true">↗</span></a></li>
+      </ul>
     </section>
+
   </main>
 
-  <footer class="site-footer">
-    <div class="site-footer-meta">
-      <span>Drafted and deployed from New York.</span>
-      <span>Set in Inter and JetBrains Mono.</span>
-    </div>
-    <div>rev <span id="build-rev">2026.04</span></div>
+  <footer class="colophon">
+    <span>Raghav Dheri © 2026</span>
+    <span>Built by hand — no framework, no template.</span>
   </footer>
 
-<script>
-(() => {
-  'use strict';
-
-  /* =============================================================
-     BLUEPRINT. interaction controller (single rAF loop)
-
-     Per-frame budget:
-       cursor physics       ≤ 2ms
-       type weight updates  ≤ 6ms
-       grid + scroll        ≤ 2ms
-
-     Perf markers (performance.now) are left commented at two
-     labelled points in frame(). Uncomment the `const t0…` lines
-     and the trailing console.log to verify on your machine.
-     ============================================================= */
-
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const finePointer  = matchMedia('(pointer: fine)').matches;
-  if (finePointer) document.body.classList.add('has-fine-pointer');
-
-  const cursorEl    = document.querySelector('.cursor');
-  const heroEl      = document.querySelector('.hero');
-  const heroTitle   = document.querySelector('#hero-title');
-  const glyphs      = heroTitle ? Array.from(heroTitle.querySelectorAll('.glyph')) : [];
-  const wghtReadout = document.getElementById('wght-readout');
-  const railEntries = document.querySelectorAll('[data-rail]');
-  const navAnchors  = document.querySelectorAll('.site-nav a');
-  const root        = document.documentElement;
-
-  let vw = window.innerWidth, vh = window.innerHeight;
-
-  /* ---- Cursor state --------------------------------------
-     `target` = true pointer position. `render` = spring-damped
-     position. The reticle follows `render`, not `target`, so it
-     has the feel of mass without overshooting. */
-  const target = { x: vw/2, y: vh/2 };
-  const render = { x: vw/2, y: vh/2 };
-  let cursorReady = false;
-
-  /* ---- Scroll state --------------------------------------- */
-  let lastScrollY = window.scrollY;
-  let lastScrollT = performance.now();
-  let scrollVelEMA = 0;
-  let scrollDirEMA = 0;
-
-  /* ---- Glyph geometry cache ------------------------------- */
-  const glyphMeta = [];
-
-  function measureGlyphs() {
-    glyphMeta.length = 0;
-    for (const el of glyphs) {
-      const r = el.getBoundingClientRect();
-      glyphMeta.push({
-        el,
-        cx: r.left + r.width * 0.5,
-        cy: r.top  + r.height * 0.5,
-        curWght: 400,
-        targetWght: 400,
-        _lastW: 0,
-      });
-    }
-  }
-  measureGlyphs();
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(measureGlyphs);
-  }
-
-  /* ---- Drafted-in hero animation -------------------------- */
-  if (heroTitle) {
-    requestAnimationFrame(() => {
-      setTimeout(() => heroTitle.classList.add('drafted'), 200);
-    });
-  }
-
-  /* ---- Events --------------------------------------------- */
-  let resizeTimer = 0;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      vw = window.innerWidth; vh = window.innerHeight;
-      measureGlyphs();
-    }, 80);
-  }, { passive: true });
-
-  if (finePointer) {
-    window.addEventListener('mousemove', (e) => {
-      target.x = e.clientX; target.y = e.clientY;
-      if (!cursorReady) { cursorReady = true; cursorEl.setAttribute('data-ready', ''); }
-    }, { passive: true });
-    window.addEventListener('mouseleave', () => {
-      cursorReady = false; cursorEl.removeAttribute('data-ready');
-    });
-  } else {
-    /* Touch: finger position drives the hero glyph weight
-       effect. No drawing / trail. */
-    if (heroEl) {
-      heroEl.addEventListener('touchstart', (e) => {
-        const t = e.touches[0];
-        target.x = t.clientX; target.y = t.clientY;
-        render.x = target.x;  render.y = target.y;
-      }, { passive: true });
-      heroEl.addEventListener('touchmove', (e) => {
-        const t = e.touches[0];
-        target.x = t.clientX; target.y = t.clientY;
-      }, { passive: true });
-    }
-
-    function startOrientation() {
-      window.addEventListener('deviceorientation', (ev) => {
-        const gx = Math.max(-8, Math.min(8, (ev.gamma || 0) * 0.3));
-        const gy = Math.max(-8, Math.min(8, (ev.beta  || 0) * 0.12));
-        const gridBg = document.querySelector('.grid-bg');
-        if (gridBg) gridBg.style.backgroundPosition =
-          gx + 'px ' + gy + 'px, ' + (gx*0.4) + 'px ' + (gy*0.4) + 'px';
-      }, { passive: true });
-    }
-    if (typeof DeviceOrientationEvent !== 'undefined' &&
-        typeof DeviceOrientationEvent.requestPermission === 'function') {
-      document.addEventListener('click', () => {
-        DeviceOrientationEvent.requestPermission()
-          .then(r => { if (r === 'granted') startOrientation(); })
-          .catch(() => {});
-      }, { once: true });
-    } else {
-      startOrientation();
-    }
-  }
-
-  document.querySelectorAll('[data-cursor="link"]').forEach(el => {
-    el.addEventListener('mouseenter', () => cursorEl.setAttribute('data-mode', 'link'));
-    el.addEventListener('mouseleave', () => cursorEl.removeAttribute('data-mode'));
-  });
-
-  /* ---- Scroll --------------------------------------------- */
-  function onScroll() {
-    const now = performance.now();
-    const y = window.scrollY;
-    const dy = y - lastScrollY;
-    const dt = Math.max(1, now - lastScrollT);
-    const inst = dy / dt;
-    scrollVelEMA = scrollVelEMA * 0.80 + Math.abs(inst) * 0.20;
-    scrollDirEMA = scrollDirEMA * 0.85 + Math.sign(inst) * 0.15;
-    lastScrollY = y; lastScrollT = now;
-
-    const boost = Math.min(1, scrollVelEMA / 4);
-    root.style.setProperty('--grid-opacity', (0.22 + 0.33 * boost).toFixed(3));
-
-    const delta = Math.max(-1, Math.min(1, scrollDirEMA * (0.5 + boost))) * 80;
-    root.style.setProperty('--scroll-weight-delta', delta.toFixed(1));
-
-    const docH = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = Math.min(100, (y / Math.max(1, docH)) * 100);
-    root.style.setProperty('--rail-progress', progress.toFixed(2) + '%');
-
-    updateActiveSection(y);
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  function updateActiveSection(y) {
-    const anchors = [
-      { id: 'hero',       el: heroEl },
-      { id: 'about',      el: document.querySelector('#about') },
-      { id: 'experience', el: document.querySelector('#experience') },
-      { id: 'projects',   el: document.querySelector('#projects') },
-      { id: 'outside',    el: document.querySelector('#outside') },
-      { id: 'contact',    el: document.querySelector('#contact') },
-    ];
-    const threshold = y + window.innerHeight * 0.33;
-    let active = 'hero';
-    for (const a of anchors) {
-      if (a.el && a.el.offsetTop <= threshold) active = a.id;
-    }
-    railEntries.forEach(e => {
-      if (e.dataset.rail === active) e.setAttribute('data-active', '');
-      else e.removeAttribute('data-active');
-    });
-    navAnchors.forEach(a => {
-      const href = a.getAttribute('href');
-      if (href === '#' + active) a.setAttribute('data-active', '');
-      else a.removeAttribute('data-active');
-    });
-  }
-
-  /* ---- Smooth anchor scroll ------------------------------- */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href');
-      if (id === '#' || id.length < 2) return;
-      const el = document.querySelector(id);
-      if (!el) return;
-      e.preventDefault();
-      el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-      history.replaceState(null, '', id);
-    });
-  });
-
-  /* ---- rAF loop ------------------------------------------- */
-  const CURSOR_TENSION = 0.20;
-  const TYPE_RADIUS    = 190;
-  const TYPE_RADIUS_SQ = TYPE_RADIUS * TYPE_RADIUS;
-  const WGHT_BASE = 360;
-  const WGHT_PEAK = 820;
-  const WGHT_STEP = 42;
-
-  let lastTypeUpdate = 0;
-  let lastTargetSnap = -1;
-
-  function frame(now) {
-    // const t0 = performance.now();
-
-    /* ==== CURSOR PHYSICS (≤2ms budget) ==== */
-    render.x += (target.x - render.x) * CURSOR_TENSION;
-    render.y += (target.y - render.y) * CURSOR_TENSION;
-    if (finePointer && cursorReady) {
-      cursorEl.style.transform = 'translate(' + render.x + 'px,' + render.y + 'px)';
-    }
-
-    // const t1 = performance.now();
-
-    /* ==== TYPE WEIGHT (≤6ms budget) ==== */
-    const snap = ((target.x | 0) << 16) ^ (target.y | 0);
-    const moved = snap !== lastTargetSnap;
-    if (!reduceMotion && glyphMeta.length && (moved || now - lastTypeUpdate > 120)) {
-      let maxWght = 0;
-      for (let i = 0; i < glyphMeta.length; i++) {
-        const g = glyphMeta[i];
-        const dx = g.cx - render.x, dy = g.cy - render.y;
-        const dSq = dx*dx + dy*dy;
-        let falloff = 0;
-        if (dSq < TYPE_RADIUS_SQ) falloff = 1 - Math.sqrt(dSq) / TYPE_RADIUS;
-        g.targetWght = WGHT_BASE + (WGHT_PEAK - WGHT_BASE) * falloff;
-        const delta = g.targetWght - g.curWght;
-        g.curWght += Math.max(-WGHT_STEP, Math.min(WGHT_STEP, delta * 0.35));
-        const wInt = g.curWght | 0;
-        if (wInt !== g._lastW) {
-          g.el.style.fontVariationSettings = "'wght' " + wInt;
-          g._lastW = wInt;
-        }
-        if (wInt > maxWght) maxWght = wInt;
-      }
-      if (wghtReadout) wghtReadout.textContent = maxWght;
-      lastTargetSnap = snap;
-      lastTypeUpdate = now;
-    }
-
-    // const t2 = performance.now();
-    // if (t2 - t0 > 6) console.log('[frame]', (t2-t0).toFixed(1),
-    //   'cursor:', (t1-t0).toFixed(1),
-    //   'type:', (t2-t1).toFixed(1));
-
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-
-  updateActiveSection(window.scrollY);
-})();
-</script>
+  <script src="app.js" defer></script>
 </body>
 </html>
