@@ -378,12 +378,20 @@ html.anim .avatar.is-blushing .av-heart { animation: heartPop 1.4s var(--ease) i
   gap: clamp(16px, 2.4vw, 30px);
   align-items: start;
 }
+/* The chip stays white in both themes: every real logo here (Genpact's black
+   cube, Stony Brook's red shield, Falcon's blue F) is drawn for a light
+   background, so tying this to --ink would break them in dark mode. */
 .xp-logo {
   width: 62px; height: 62px; border-radius: 50%;
-  background: var(--ink); color: var(--bg);
+  background: #FFFFFF; color: #000000;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
   font-family: var(--serif); font-size: 26px; font-weight: 600;
-  transition: background 0.4s var(--ease), color 0.4s var(--ease);
+}
+.xp-logo img {
+  width: 66%; height: 66%;
+  object-fit: contain; display: block;
 }
 .xp-main h3 {
   font-family: var(--sans); font-size: clamp(20px, 2.1vw, 25px);
