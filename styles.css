@@ -623,9 +623,12 @@ html.anim body.reveal-failsafe .reveal {
    RESPONSIVE
    ============================================================ */
 @media (max-width: 960px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-portrait { order: -1; }
-  .avatar { max-width: 250px; }
+  /* Name leads at every width. The portrait used to sit above it here, which
+     made the first screenful a floating face with no name. */
+  .hero { grid-template-columns: 1fr; gap: 32px; }
+  .hero-portrait { justify-self: start; }
+  .avatar { max-width: 230px; margin: 0; }
+  .portrait-caption { text-align: left; }
   .project-grid, .edu-grid { grid-template-columns: 1fr; }
   .section-ai .ai-wrap { grid-template-columns: 1fr; }
   .skill-group { grid-template-columns: 1fr; gap: 6px; }
