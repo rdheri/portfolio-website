@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Raghav Dheri | Software Engineer</title>
 <meta name="description" content="Raghav Dheri. I'm a software engineer that works across the full stack. I love to ask the right questions and think about the people I'm building for. I have a product-first mindset, and use AI to solve problems exponentially faster.">
-<meta name="theme-color" content="#FAF6EF">
+<meta name="theme-color" content="#000000">
 <meta property="og:title" content="Raghav Dheri | Software Engineer">
 <meta property="og:description" content="I'm a software engineer that works across the full stack. I have a product-first mindset, and use AI to solve problems exponentially faster.">
 <meta property="og:url" content="https://raghavdheri.com">
@@ -14,13 +14,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=DM+Sans:opsz,wght@9..40,400..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script>
-  // Set theme before first paint so there's no flash.
+  // Everyone lands in dark, every visit. Set before first paint so there's no
+  // flash; the in-page toggle switches this page only and isn't remembered.
   (function () {
     var d = document.documentElement;
-    try {
-      var t = localStorage.getItem('theme');
-      d.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
-    } catch (e) {}
+    d.setAttribute('data-theme', 'dark');
     try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('anim'); } catch (e) {}
   })();
 </script>

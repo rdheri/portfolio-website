@@ -1,23 +1,36 @@
 /* ============================================================
    raghavdheri.com — built from scratch
-   warm paper / ink / persimmon, with a blush.
+   RunSybil palette: pure black, white, acid lime, deep indigo.
    Fraunces (display) · DM Sans (body) · DM Mono (labels)
+
+   Sampled from runsybil.com's design tokens:
+     yellow-400 #DAF902 (brand), yellow-300 #E3FB41, yellow-800 #799E00,
+     yellow-900 #597500, blue-400 #746DFD, pink-300 #FF79E0,
+     neutrals #000 / #212121 / #404040 / #666 / #A6A6A6 / #F3F3F3,
+     and the deep indigo-black #0E0026 they use behind feature panels.
+
+   Lime is a fill colour, not a text colour: #DAF902 on white is ~1.4:1.
+   So --accent-fill is the true brand lime everywhere (always paired with
+   --on-accent black), while --accent / --accent-deep step down the yellow
+   ramp in light mode so text stays legible.
    ============================================================ */
 
 :root {
-  --bg:          #FAF6EF;
-  --bg-soft:     #F3EDE1;
-  --card:        #FFFDF8;
-  --ink:         #1D1814;
-  --muted:       #71675C;
-  --line:        rgba(29, 24, 20, 0.14);
-  --accent:      #D9481F;
-  --accent-deep: #AE3512;
-  --blush:       #F0A2B2;
-  --blob:        #F2E7D8;
-  --closer-bg:   #1D1814;
-  --closer-ink:  #FAF6EF;
-  --shadow:      0 2px 0 rgba(29,24,20,0.06);
+  --bg:          #FFFFFF;
+  --bg-soft:     #F3F3F3;
+  --card:        #FFFFFF;
+  --ink:         #000000;
+  --muted:       #666666;
+  --line:        #E5E5E5;
+  --accent:      #799E00;   /* yellow-800 — display text on white */
+  --accent-deep: #597500;   /* yellow-900 — small text on white   */
+  --accent-fill: #DAF902;   /* brand lime — backgrounds only      */
+  --on-accent:   #000000;
+  --blush:       #FF98E7;
+  --blob:        #F3F3F3;
+  --closer-bg:   #0E0026;
+  --closer-ink:  #FFFFFF;
+  --shadow:      0 2px 0 rgba(0,0,0,0.05);
 
   --sans: "DM Sans", system-ui, sans-serif;
   --serif: "Fraunces", Georgia, serif;
@@ -27,20 +40,23 @@
   --gutter: clamp(20px, 5vw, 72px);
 }
 
+/* The faithful RunSybil look: lime on pure black. */
 [data-theme="dark"] {
-  --bg:          #171210;
-  --bg-soft:     #1F1915;
-  --card:        #211B17;
-  --ink:         #F3ECE1;
-  --muted:       #A79A8C;
-  --line:        rgba(243, 236, 225, 0.16);
-  --accent:      #FF7042;
-  --accent-deep: #FF8A63;
-  --blush:       #D98A9B;
-  --blob:        #241C18;
-  --closer-bg:   #100D0B;
-  --closer-ink:  #F3ECE1;
-  --shadow:      0 2px 0 rgba(0,0,0,0.3);
+  --bg:          #000000;
+  --bg-soft:     #0F0F0F;
+  --card:        #121212;
+  --ink:         #FFFFFF;
+  --muted:       #A6A6A6;
+  --line:        #2E2E2E;
+  --accent:      #DAF902;
+  --accent-deep: #E3FB41;
+  --accent-fill: #DAF902;
+  --on-accent:   #000000;
+  --blush:       #FF79E0;
+  --blob:        #1A1E06;
+  --closer-bg:   #0E0026;
+  --closer-ink:  #FFFFFF;
+  --shadow:      none;
 }
 
 /* ---------- reset-ish ---------- */
@@ -61,7 +77,7 @@ ul, ol { list-style: none; }
 h1, h2, h3 { line-height: 1.05; font-weight: 560; }
 em { font-style: italic; }
 svg { display: block; }
-::selection { background: var(--accent); color: var(--bg); }
+::selection { background: var(--accent-fill); color: var(--on-accent); }
 
 /* ============================================================
    LOADER — hello ×5
@@ -213,8 +229,8 @@ html.anim body.is-ready .bar { animation: pageRise 0.8s var(--ease); }
   transition: transform 0.25s var(--ease), background 0.2s, color 0.2s, border-color 0.2s;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn-solid { background: var(--accent); color: #FFF7F2; }
-.btn-solid:hover { background: var(--accent-deep); }
+.btn-solid { background: var(--accent-fill); color: var(--on-accent); font-weight: 700; }
+.btn-solid:hover { background: #E3FB41; }
 .btn-ghost { border: 1.5px solid var(--line); color: var(--ink); }
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent-deep); }
 
@@ -258,6 +274,12 @@ html.anim .avatar { animation: avatarFloat 6s ease-in-out infinite; }
 .av-grin  { fill: #8A4437; }
 .av-cheek { fill: var(--blush); }
 .av-heart { fill: var(--blush); }
+
+/* The hoodie is near-black by design; on a pure black canvas it needs
+   lifting or the avatar reads as a floating head. */
+[data-theme="dark"] .av-hoodie     { fill: #262626; }
+[data-theme="dark"] .av-hoodie-rim { fill: #333333; }
+[data-theme="dark"] .av-string     { stroke: #5A5A5A; }
 
 /* blush choreography */
 .av-cheek { opacity: 0; transition: opacity 0.3s var(--ease); }
@@ -511,20 +533,20 @@ html.anim .ai-boy-head { animation: headNod 3.4s ease-in-out infinite; transform
 .ai-laptop-base { fill: var(--muted); opacity: 0.6; }
 .ai-monitor { fill: #262220; }
 .ai-screen  { fill: #16130F; }
-[data-theme="dark"] .ai-monitor { fill: #0D0B09; }
+[data-theme="dark"] .ai-monitor { fill: #1E1E1E; }
 .ai-dot { opacity: 0.9; }
 .ai-dot.d1 { fill: #FF5F57; } .ai-dot.d2 { fill: #FEBC2E; } .ai-dot.d3 { fill: #28C840; }
 .ai-title {
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
   fill: #9C8F81;
 }
-.ai-prompt { font-family: var(--mono); font-size: 13px; fill: #F3ECE1; }
-.ai-chevron { fill: #FF7042; }
-.ai-caret { fill: #FF7042; }
+.ai-prompt { font-family: var(--mono); font-size: 13px; fill: #F3F3F3; }
+.ai-chevron { fill: #DAF902; }
+.ai-caret { fill: #DAF902; }
 html.anim .ai-caret { animation: caretBlink 0.9s steps(1) infinite; }
 @keyframes caretBlink { 50% { opacity: 0; } }
-.ai-line { fill: #4A423A; opacity: 0; transition: opacity 0.25s var(--ease); }
-.ai-line-accent { fill: #FF7042; }
+.ai-line { fill: #404040; opacity: 0; transition: opacity 0.25s var(--ease); }
+.ai-line-accent { fill: #DAF902; }
 .ai-line.is-on { opacity: 0.85; }
 .ai-done {
   font-family: var(--mono); font-size: 12px; fill: #57C97B;
@@ -532,7 +554,7 @@ html.anim .ai-caret { animation: caretBlink 0.9s steps(1) infinite; }
 }
 .ai-done.is-on { opacity: 1; }
 .ai-stand { fill: #262220; }
-[data-theme="dark"] .ai-stand { fill: #0D0B09; }
+[data-theme="dark"] .ai-stand { fill: #1E1E1E; }
 
 /* ============================================================
    ABOUT
@@ -574,8 +596,9 @@ html.anim .ai-caret { animation: caretBlink 0.9s steps(1) infinite; }
   font-size: clamp(52px, 9vw, 110px);
   font-weight: 600; letter-spacing: -0.02em; line-height: 1;
 }
-.closer-title em { color: var(--accent); }
-[data-theme="dark"] .closer-title em { color: #FF7042; }
+/* The closer band is dark indigo in both themes, so it always takes the
+   bright lime — light mode's darker olive would be unreadable on it. */
+.closer-title em { color: var(--accent-fill); }
 .closer-note {
   margin: 26px auto 0; max-width: 34em;
   color: var(--closer-ink); opacity: 0.72; font-size: 16.5px;
@@ -593,7 +616,7 @@ html.anim .ai-caret { animation: caretBlink 0.9s steps(1) infinite; }
   transition: border-color 0.2s, color 0.2s;
 }
 .closer-links a span { opacity: 0.6; letter-spacing: 0.03em; }
-.closer-links a:hover { color: #FF9C7A; border-color: currentColor; }
+.closer-links a:hover { color: var(--accent-fill); border-color: currentColor; }
 
 .site-foot {
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;

@@ -29,15 +29,12 @@
     setTimeout(function () { loader.classList.add('is-gone'); }, 800);
   }
 
+  // The full five-language cycle runs on every load, not just the first of a
+  // session — a repeat visit used to flash the static "Hello" and nothing else.
   function runLoader() {
     if (!loader || !word) return;
-    var seen = false;
-    try { seen = sessionStorage.getItem('greeted') === '1'; } catch (e) {}
-
     if (reduce || !anim) { finishLoader(); return; }
-    if (seen) { setTimeout(finishLoader, 350); return; }
 
-    try { sessionStorage.setItem('greeted', '1'); } catch (e) {}
     var i = 0;
     var step = 360;
     (function next() {
@@ -65,10 +62,11 @@
   }
   syncLabel();
 
+  // Deliberately not persisted: every visit starts in dark, and the toggle
+  // only switches the current page.
   if (toggle) toggle.addEventListener('click', function () {
     var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
     syncLabel();
   });
 
