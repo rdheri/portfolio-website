@@ -3,375 +3,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Raghav Dheri — Full-Stack Developer</title>
-<meta name="description" content="Raghav Dheri — full-stack developer. I build things that don't break — and three of them are running live on this page. Recent Stony Brook grad (CS + Applied Math).">
-<meta name="theme-color" content="#F3F4F1">
-<meta property="og:title" content="Raghav Dheri — Full-Stack Developer">
-<meta property="og:description" content="I build things that don't break. Three of my projects run live on this page — go ahead and try to break them.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://raghavdheri.com/profile-pic.jpeg">
-<link rel="canonical" href="https://raghavdheri.com">
-
+<title>Raghav Dheri | Software Engineer</title>
+<meta name="description" content="Raghav Dheri. I'm a software engineer that works across the full stack. I love to ask the right questions and think about the people I'm building for. I have a product-first mindset, and use AI to solve problems exponentially faster.">
+<meta name="theme-color" content="#FAF6EF">
+<meta property="og:title" content="Raghav Dheri | Software Engineer">
+<meta property="og:description" content="I'm a software engineer that works across the full stack. I have a product-first mindset, and use AI to solve problems exponentially faster.">
+<meta property="og:url" content="https://raghavdheri.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=DM+Sans:opsz,wght@9..40,400..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <script>
+  // Set theme before first paint so there's no flash.
   (function () {
     var d = document.documentElement;
     try {
       var t = localStorage.getItem('theme');
       d.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
-    } catch (e) { d.setAttribute('data-theme', 'light'); }
+    } catch (e) {}
     try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('anim'); } catch (e) {}
   })();
 </script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#work">Skip to work</a>
 
-  <!-- ============ MASTHEAD ============ -->
-  <header class="masthead" id="top">
-    <a class="brand" href="#top" aria-label="Raghav Dheri — home">
-      <span class="brand-glyph" aria-hidden="true">✳</span>
-      <span class="brand-name">Raghav Dheri</span>
+<!-- ===================== LOADER — hello in my five languages ===================== -->
+<div id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <span id="loader-word" class="loader-word">Hello</span>
+    <span class="loader-hint">raghavdheri.com</span>
+  </div>
+</div>
+
+<!-- ===================== TOP BAR — home · about · contact ===================== -->
+<header class="bar bar-top" id="top">
+  <a class="wordmark" href="#home">raghav<span class="wordmark-dot">.</span>dheri</a>
+  <nav class="nav-pages" aria-label="Site">
+    <a href="#home">home</a>
+    <a href="#about">about</a>
+  </nav>
+  <div class="nav-contact" aria-label="Contact">
+    <span class="nav-contact-label">contact</span>
+    <a href="mailto:dheriraghav@gmail.com" title="Email">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m3 6 9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+      <span>email</span>
     </a>
-    <p class="masthead-tag" aria-hidden="true">Software Engineer</p>
-    <nav class="masthead-nav" aria-label="Primary">
-      <a href="#work"><span class="n">01</span>Work</a>
-      <a href="#experience"><span class="n">02</span>Experience</a>
-      <a href="#about"><span class="n">03</span>About</a>
-      <a href="#contact"><span class="n">04</span>Contact</a>
-      <button class="toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
-        <span class="toggle-dot" aria-hidden="true"></span>
-        <span class="toggle-label" aria-hidden="true">Light</span>
-      </button>
-    </nav>
+    <a href="https://linkedin.com/in/raghav-dheri" target="_blank" rel="noopener" title="LinkedIn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11v5M8 8v.5M12 16v-3.2c0-1.8 4-2 4 0V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span>linkedin</span>
+    </a>
+    <a href="https://github.com/rdheri" target="_blank" rel="noopener" title="GitHub">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-2.85 17.54c.45.08.62-.2.62-.44v-1.7c-2.5.55-3.03-1.07-3.03-1.07-.41-1.04-1-1.32-1-1.32-.82-.56.06-.55.06-.55.9.06 1.38.93 1.38.93.8 1.38 2.11.98 2.63.75.08-.58.31-.98.57-1.2-2-.23-4.1-1-4.1-4.45 0-.98.35-1.79.93-2.42-.1-.23-.4-1.15.08-2.4 0 0 .76-.24 2.48.92a8.6 8.6 0 0 1 4.52 0c1.72-1.16 2.47-.92 2.47-.92.5 1.25.19 2.17.1 2.4.57.63.92 1.44.92 2.42 0 3.47-2.1 4.22-4.11 4.44.32.28.61.83.61 1.67v2.48c0 .24.16.53.62.44A9 9 0 0 0 12 3Z" fill="currentColor"/></svg>
+      <span>github</span>
+    </a>
+  </div>
+  <button id="theme-toggle" type="button" aria-label="Switch theme">
+    <span class="tt-track"><span class="tt-thumb"></span></span>
+    <span class="tt-label">dark</span>
+  </button>
+</header>
+
+<!-- ===================== WORK BAR — the showcase nav ===================== -->
+<nav class="bar bar-work" id="workbar" aria-label="My work">
+  <span class="work-label">my work</span>
+  <div class="work-links">
+    <a href="#projects" data-spy="projects">projects</a>
+    <a href="#experience" data-spy="experience">work&nbsp;experience</a>
+    <a href="#skills" data-spy="skills">skills</a>
+    <a href="#education" data-spy="education">education</a>
+    <a href="#ai" data-spy="ai">building&nbsp;with&nbsp;ai</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <p class="hero-kicker reveal">नमस्ते · hello · hola · ਸਤ ਸ੍ਰੀ ਅਕਾਲ · કેમ છો · i'm</p>
+    <h1 class="hero-name reveal">Raghav<br><em>Dheri</em><span class="accent-dot">.</span></h1>
+    <p class="hero-tag reveal">i like to build secure and scalable software that reaches end
+      users. i work across the stack, ask the right questions, and really put myself into the
+      people i'm building for. <span class="u-accent">i love using ai to build exponentially
+      faster.</span></p>
+    <p class="hero-meta reveal">software engineer · cambridge, ma</p>
+    <div class="hero-cta reveal">
+      <a class="btn btn-solid" href="#projects">see my work ↓</a>
+      <a class="btn btn-ghost" href="mailto:dheriraghav@gmail.com">say hi</a>
+    </div>
+  </div>
+
+  <figure class="hero-portrait reveal" aria-label="Cartoon portrait of Raghav. Poke it, he blushes.">
+    <div id="avatar" class="avatar" role="img" aria-label="Illustration of Raghav. Touch it and he blushes." tabindex="0">
+      <svg viewBox="0 0 360 400" xmlns="http://www.w3.org/2000/svg">
+        <!-- backdrop blob -->
+        <circle class="av-blob" cx="180" cy="205" r="162"/>
+        <!-- hearts (pop on blush) -->
+        <g class="av-hearts" aria-hidden="true">
+          <path class="av-heart h1" d="M296 84c-5-9-18-7-18 3 0 8 10 14 18 20 8-6 18-12 18-20 0-10-13-12-18-3Z"/>
+          <path class="av-heart h2" d="M64 110c-4-7-14-5-14 2 0 6 8 11 14 16 6-5 14-10 14-16 0-7-10-9-14-2Z"/>
+          <path class="av-heart h3" d="M312 160c-3-6-12-4-12 2 0 5 7 9 12 13 5-4 12-8 12-13 0-6-9-8-12-2Z"/>
+        </g>
+        <!-- hoodie -->
+        <path class="av-hoodie" d="M74 400c2-62 30-96 70-108l36-8 36 8c40 12 68 46 70 108Z"/>
+        <path class="av-hoodie-rim" d="M136 300c10-16 78-16 88 0l-10 16c-14-10-54-10-68 0Z"/>
+        <line class="av-string" x1="164" y1="316" x2="162" y2="352"/>
+        <line class="av-string" x1="196" y1="316" x2="198" y2="352"/>
+        <!-- neck -->
+        <path class="av-neck" d="M158 246h44v52c0 12-44 12-44 0Z"/>
+        <path class="av-neck-shade" d="M158 246h44v14c-14 8-30 8-44 0Z"/>
+        <!-- ears -->
+        <circle class="av-skin" cx="102" cy="196" r="15"/>
+        <circle class="av-skin" cx="258" cy="196" r="15"/>
+        <!-- face -->
+        <ellipse class="av-skin" cx="180" cy="178" rx="78" ry="86"/>
+        <!-- hair: messy fringe -->
+        <path class="av-hair" d="M102 200c-4-86 36-124 78-124s82 38 78 124l-6 2c1-26-2-40-8-52l-8 22-12-30-14 24-12-28-14 26-12-24-12 28-12-22c-8 12-11 28-10 54Z"/>
+        <!-- brows -->
+        <path class="av-brow" d="M126 190c8-6 24-7 32-3l-3 8c-8-3-20-2-26 2Z"/>
+        <path class="av-brow" d="M234 190c-8-6-24-7-32-3l3 8c8-3 20-2 26 2Z"/>
+        <!-- glasses -->
+        <g class="av-glasses">
+          <rect x="120" y="198" width="56" height="46" rx="15"/>
+          <rect x="184" y="198" width="56" height="46" rx="15"/>
+          <path d="M176 216h8M120 216l-18-8M240 216l18-8"/>
+        </g>
+        <!-- eyes: normal -->
+        <g class="av-eyes-open">
+          <circle class="av-eye" cx="148" cy="221" r="8"/>
+          <circle class="av-eye" cx="212" cy="221" r="8"/>
+          <circle class="av-glint" cx="151" cy="218" r="2.6"/>
+          <circle class="av-glint" cx="215" cy="218" r="2.6"/>
+        </g>
+        <!-- eyes: happy squint (shown when blushing) -->
+        <g class="av-eyes-happy">
+          <path d="M138 224c4-9 16-9 20 0"/>
+          <path d="M202 224c4-9 16-9 20 0"/>
+        </g>
+        <!-- nose -->
+        <path class="av-nose" d="M180 232c-3 8-6 12 2 15"/>
+        <!-- cheeks -->
+        <ellipse class="av-cheek" cx="134" cy="248" rx="15" ry="9"/>
+        <ellipse class="av-cheek" cx="226" cy="248" rx="15" ry="9"/>
+        <!-- mouth: normal + blushing grin -->
+        <path class="av-mouth" d="M162 264c10 9 26 9 36 0"/>
+        <path class="av-grin" d="M158 262c14 20 30 20 44 0-14 6-30 6-44 0Z"/>
+      </svg>
+    </div>
+    <figcaption class="portrait-caption">↑ that's me. poke me.</figcaption>
+  </figure>
+</section>
+
+<!-- ===================== 01 · PROJECTS ===================== -->
+<section class="section" id="projects">
+  <header class="section-head reveal">
+    <span class="section-num">01</span>
+    <h2><em>projects</em></h2>
+    <p class="section-note">all clickable!</p>
   </header>
 
-  <main>
+  <div class="project-grid">
+    <a class="project reveal" href="https://github.com/rdheri/distqueue" target="_blank" rel="noopener">
+      <h3>distributed task queue</h3>
+      <p>a distributed task queue built with Go, Raft and PostgreSQL that runs every job exactly once.</p>
+    </a>
 
-    <!-- ============ COVER / HERO ============ -->
-    <section class="cover" aria-labelledby="cover-h">
-      <div class="cover-inner">
-        <div class="cover-text">
-          <span class="kicker"><span class="kicker-dot"></span>Open to New Opportunities · Boston, MA </span>
-          <h1 class="cover-h" id="cover-h"><span class="cl"><span class="ci"> Software</span></span><span class="cl"><span class="ci"><em>&nbsp;Engineer.</em></span></span></h1>
-          <p class="cover-hook">
-            I love building and solving problems&nbsp;— <strong>one prompt at a time.</strong>
-          </p>
-          <div class="cover-cta">
-            <a class="link-strong" href="#work">See the work <span aria-hidden="true">→</span></a>
-            <a class="link-quiet" href="https://github.com/rdheri" target="_blank" rel="noopener">GitHub</a>
-            <a class="link-quiet" href="https://linkedin.com/in/raghav-dheri" target="_blank" rel="noopener">LinkedIn</a>
-            <a class="link-quiet" href="mailto:dheriraghav@gmail.com">Email</a>
-          </div>
-        </div>
+    <a class="project reveal" href="https://cse416-client.onrender.com/" target="_blank" rel="noopener">
+      <h3>p4sbu</h3>
+      <p>a full-stack campus parking platform built with React, Node, MongoDB and Stripe.</p>
+    </a>
 
-        <figure class="cover-portrait">
-          <div class="cover-portrait-img">
-            <img src="profile-pic.jpeg" width="800" height="800" alt="Raghav Dheri" fetchpriority="high">
-          </div>
-          <figcaption><span>Raghav Dheri</span><span>Boston · 2026</span></figcaption>
-        </figure>
-      </div>
+    <a class="project reveal" href="https://settle-dashboard-five.vercel.app" target="_blank" rel="noopener">
+      <h3>settle</h3>
+      <p>a double-entry financial ledger built with TypeScript, Node and PostgreSQL.</p>
+    </a>
 
-      <dl class="spec" aria-label="Quick facts">
-        <div><dt>Role</dt><dd>Software Engineer</dd></div>
-        <div><dt>School</dt><dd>Stony Brook — Computer Science + Applied Math and Statistics</dd></div>
-        <div><dt>Class</dt><dd>2026 · GPA: 3.60 · Cum Laude</dd></div>
-        <div><dt>Works in</dt><dd>React · Node · TypeScript · Python · Go</dd></div>
-      </dl>
-    </section>
+    <a class="project reveal" href="https://converge-web-seven.vercel.app" target="_blank" rel="noopener">
+      <h3>converge</h3>
+      <p>a real-time collaborative editor built with TypeScript and WebSockets, on a CRDT i wrote myself.</p>
+    </a>
 
-    <!-- ============ STATEMENT BAND (ink) ============ -->
-    <section class="band" aria-label="How I work">
-      <p class="band-quote">
-        I went from coding every line by hand to leveraging AI to build at 10x speed.
-        The instinct never changed&nbsp;— break it apart, figure out how it works, <em>ship it.</em>
-      </p>
-    </section>
+    <a class="project reveal" href="https://devlens-ai.vercel.app/" target="_blank" rel="noopener">
+      <h3>devlens ai</h3>
+      <p>an ai code reviewer built with Next.js and Groq that reads any GitHub profile.</p>
+    </a>
 
-    <!-- ============ WORK ============ -->
-    <section class="chapter" id="work" aria-labelledby="work-title">
-      <div class="chapter-head">
-        <span class="chapter-no">01</span>
-        <div>
-          <h2 class="chapter-title" id="work-title">Stuff I've built</h2>
-        </div>
-      </div>
+    <a class="project reveal" href="https://pypi.org/project/stresskit/" target="_blank" rel="noopener">
+      <h3>stresskit</h3>
+      <p>an API load-testing CLI built with Python and asyncio, published on PyPI.</p>
+    </a>
+  </div>
+</section>
 
-      <!-- live warm-up: the interactive consensus -->
-      <div class="warmup" aria-label="Warm-up demo">
-        <div class="warmup-copy">
-          <span class="warmup-label">Warm-up</span>
-          <p>This is how my distributed projects stay in agreement. Knock a node offline — as long as most of them are up, the system keeps working. Drop too many and it stalls.</p>
-        </div>
-        <figure class="consensus" aria-label="An interactive five-node cluster. A majority must be online to reach quorum.">
-          <div class="consensus-nodes" id="consensus-nodes" role="group" aria-label="Cluster nodes — click to drop or restore one"></div>
-          <figcaption class="consensus-read" id="consensus-read"></figcaption>
-        </figure>
-      </div>
+<!-- ===================== 02 · WORK EXPERIENCE ===================== -->
+<section class="section" id="experience">
+  <header class="section-head reveal">
+    <span class="section-num">02</span>
+    <h2>work <em>experience</em></h2>
+  </header>
 
-      <div class="filters" id="filters" role="group" aria-label="Filter projects by theme">
-        <button class="chip is-active" data-filter="all" type="button">Everything</button>
-        <button class="chip" data-filter="live" type="button">Try it live</button>
-        <button class="chip" data-filter="fullstack" type="button">Full-stack</button>
-        <button class="chip" data-filter="ai" type="button">AI</button>
-        <button class="chip" data-filter="systems" type="button">Systems</button>
-        <button class="chip" data-filter="tooling" type="button">Tooling</button>
-      </div>
-
-      <ol class="works">
-
-        <!-- 1 · Distributed Task Queue -->
-        <li class="work work-live" id="p-dtq" data-themes="live systems fullstack">
-          <div class="work-text">
-            <div class="work-top"><span class="work-no">01</span><span class="work-kind">Go · Raft · PostgreSQL · React</span></div>
-            <h3 class="work-title">Distributed Task Queue</h3>
-            <p class="work-line">A job queue that runs every task <em>exactly once</em>, even when a server dies.</p>
-            <p class="work-desc">
-              I wrote this in Go on top of Raft. A handful of servers stay in agreement so every job runs
-              once and only once, even if the machine running it falls over halfway through. I pushed it to
-              8,500+ jobs a second and wrote tests that crash nodes on purpose to prove nothing
-              gets lost or duplicated. Go ahead and kill the leader yourself! It'll elect a new one and keep going.
-            </p>
-            <ul class="metrics"><li><b>8,500+</b><span>jobs / sec</span></li><li><b>exactly-once</b><span>delivery</span></li><li><b>0</b><span>lost on failure</span></li></ul>
-            <ul class="stack"><li>Go</li><li>Raft</li><li>PostgreSQL</li><li>Docker</li><li>Prometheus</li><li>Grafana</li></ul>
-            <div class="work-links"><a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a></div>
-          </div>
-          <figure class="plate" aria-label="Live: a Raft cluster committing jobs and surviving leader failure">
-            <figcaption class="plate-cap"><span class="plate-dot"></span>live — break it</figcaption>
-            <div class="plate-body" data-mount="dtq"></div>
-          </figure>
-        </li>
-
-        <!-- 2 · Settle -->
-        <li class="work work-live" id="p-settle" data-themes="live fullstack systems">
-          <div class="work-text">
-            <div class="work-top"><span class="work-no">02</span><span class="work-kind">TypeScript · Node · PostgreSQL · React</span></div>
-            <h3 class="work-title">Settle: <span class="title-sub">a Full Stack Financial Ledger Platform</span></h3>
-            <p class="work-line">A double-entry ledger that never loses or duplicates a cent.</p>
-            <p class="work-desc">
-              This is the way banks actually track money. Every debit has a matching credit, so the books
-              can never quietly drift. I built the service in Node and Postgres and a React dashboard on top
-              of it. The fun part was the failure testing: I simulated crashes and dropped requests mid-payment,
-              over a hundred times, and it never drifted or double-charged anyone. Try crashing it yourself!
-            </p>
-            <ul class="metrics"><li><b>2,800+</b><span>concurrent ops</span></li><li><b>$0.00</b><span>drift, ever</span></li><li><b>100+</b><span>crash tests</span></li></ul>
-            <ul class="stack"><li>TypeScript</li><li>React</li><li>Node.js</li><li>PostgreSQL</li><li>Docker</li></ul>
-            <div class="work-links"><a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a></div>
-          </div>
-          <figure class="plate" aria-label="Live: a double-entry ledger that stays balanced through injected crashes">
-            <figcaption class="plate-cap"><span class="plate-dot"></span>live — break it</figcaption>
-            <div class="plate-body" data-mount="settle"></div>
-          </figure>
-        </li>
-
-        <!-- 3 · Converge -->
-        <li class="work work-live" id="p-converge" data-themes="live fullstack">
-          <div class="work-text">
-            <div class="work-top"><span class="work-no">03</span><span class="work-kind">TypeScript · React · WebSocket · Node</span></div>
-            <h3 class="work-title">Converge: <span class="title-sub">Real-Time Collaborative Editor</span></h3>
-            <p class="work-line">Google-Docs-style editing — and I wrote the merge engine myself.</p>
-            <p class="work-desc">
-              A real-time collaborative editor built on a CRDT I wrote in TypeScript. Two people can type at
-              the exact same time, or go offline and come back, and it always reconciles to the same document with
-              no conflicts. The server keeps 100+ people in sync over WebSockets and reconnects
-              on its own. Type in both boxes on the right and watch them converge!
-            </p>
-            <ul class="metrics"><li><b>100+</b><span>live editors</span></li><li><b>0</b><span>lost edits</span></li><li><b>offline</b><span>and back</span></li></ul>
-            <ul class="stack"><li>TypeScript</li><li>React</li><li>Node.js</li><li>WebSocket</li><li>PostgreSQL</li></ul>
-            <div class="work-links"><a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a></div>
-          </div>
-          <figure class="plate" aria-label="Live: two replicas editing concurrently and converging to one document">
-            <figcaption class="plate-cap"><span class="plate-dot"></span>live — try it</figcaption>
-            <div class="plate-body" data-mount="converge"></div>
-          </figure>
-        </li>
-
-        <!-- 4 · P4SBU -->
-        <li class="work work-feature" id="p-p4sbu" data-themes="fullstack">
-          <div class="work-text">
-            <div class="work-top"><span class="work-no">04</span><span class="work-kind">React · Node · MongoDB · Neo4j · Stripe</span></div>
-            <h3 class="work-title">P4SBU: <span class="title-sub">Parking Management System</span></h3>
-            <p class="work-line">A full-stack platform deployed to 17,000+ Stony Brook students.</p>
-            <p class="work-desc">
-              I led a team of four and built this platform end-to-end, from the database all the way to the admin
-              dashboard. Students search, get directions to, reserve, and pay for parking across 20+ lots in
-              real time. A few parts were genuinely tricky, and I'm proud of how they turned out:
-            </p>
-            <ul class="feature-grid">
-              <li><span class="feat-k">Payments</span><span class="feat-v">Stripe end-to-end — multiple methods, automatic refunds, and PCI / FERPA-compliant encryption.</span></li>
-              <li><span class="feat-k">Directions</span><span class="feat-v">Dijkstra shortest-path routing wired straight into the Google Maps API.</span></li>
-              <li><span class="feat-k">No double-booking</span><span class="feat-v">Real-time spot-locking so two people can't grab the same space.</span></li>
-              <li><span class="feat-k">Who sees what</span><span class="feat-v">Role-based access for students, faculty, and admins.</span></li>
-              <li><span class="feat-k">Admin tools</span><span class="feat-v">A dashboard with live occupancy and usage analytics.</span></li>
-              <li><span class="feat-k">Scale</span><span class="feat-v">17,000+ users, 20+ lots, reservations under 200ms.</span></li>
-            </ul>
-            <ul class="stack"><li>React</li><li>Node.js</li><li>Express</li><li>Python</li><li>MongoDB</li><li>Neo4j</li><li>Stripe</li><li>Google Maps</li></ul>
-            <div class="work-links">
-              <a href="https://cse416-client.onrender.com/" target="_blank" rel="noopener">Live demo <span aria-hidden="true">↗</span></a>
-              <a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-          <figure class="plate plate-static" aria-label="Architecture diagram of the P4SBU platform">
-            <figcaption class="plate-cap"><span class="plate-dot"></span>how it's wired</figcaption>
-            <div class="plate-body arch" data-mount="arch"></div>
-          </figure>
-        </li>
-
-        <!-- 5 · DevLens AI -->
-        <li class="work work-card" id="p-devlens" data-themes="ai fullstack">
-          <div class="work-text">
-            <div class="work-top"><span class="work-no">05</span><span class="work-kind">Next.js · Groq · GitHub API</span></div>
-            <h3 class="work-title">DevLens AI</h3>
-            <p class="work-line">Point it at any GitHub profile and it reads the code.</p>
-            <p class="work-desc">
-              I used Llama 3.3 on Groq to analyze 50+ GitHub repositories and return comprehensive feedback on a developer's work.
-              This includes their strengths, what they actually ship, even a side-by-side comparison in under 15 seconds.
-              Next.js front to back, deployed on Vercel, with PDF export.
-            </p>
-            <ul class="metrics"><li><b>50+</b><span>repos read</span></li><li><b>&lt;15s</b><span>full report</span></li></ul>
-            <ul class="stack"><li>Next.js</li><li>TypeScript</li><li>Groq / Llama 3.3</li><li>GitHub API</li><li>Vercel</li></ul>
-            <div class="work-links">
-              <a href="https://devlens-ai.vercel.app/" target="_blank" rel="noopener">Live demo <span aria-hidden="true">↗</span></a>
-              <a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </li>
-
-        <!-- 6 · StressKit -->
-        <li class="work work-card" id="p-stresskit" data-themes="tooling systems">
-          <div class="work-text">
-            <div class="work-top"><span class="work-no">06</span><span class="work-kind">Python · asyncio · PyPI</span></div>
-            <h3 class="work-title">StressKit</h3>
-            <p class="work-line">A little CLI I built to hammer APIs and find where they break.</p>
-            <p class="work-desc">
-              Configurable concurrency, latency percentiles, throughput. The async engine holds
-              1,000+ requests a second. I wrote 56 tests and a CI pipeline so the tool itself stays honest,
-              then published it to PyPI so anyone can <code>pip install</code> it.
-            </p>
-            <ul class="metrics"><li><b>1,000+</b><span>req / sec</span></li><li><b>56</b><span>tests</span></li><li><b>PyPI</b><span>shipped</span></li></ul>
-            <ul class="stack"><li>Python</li><li>asyncio</li><li>aiohttp</li><li>Typer</li><li>Rich</li><li>Pydantic</li></ul>
-            <div class="work-links">
-              <a href="https://pypi.org/project/stresskit/" target="_blank" rel="noopener">PyPI <span aria-hidden="true">↗</span></a>
-              <a href="https://github.com/rdheri" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </li>
-
-      </ol>
-    </section>
-
-    <!-- ============ EXPERIENCE ============ -->
-    <section class="chapter" id="experience" aria-labelledby="exp-title">
-      <div class="chapter-head">
-        <span class="chapter-no">02</span>
-        <div>
-          <h2 class="chapter-title" id="exp-title">Where I've worked</h2>
-        </div>
-      </div>
-
-      <ol class="exp-list">
-        <li class="exp">
-          <div class="exp-when">2023 — now</div>
-          <div class="exp-body">
-            <h3 class="exp-role">Founder</h3>
-            <p class="exp-org">Kaya — AI-powered rental management</p>
-            <p class="exp-desc">I started Kaya and I'm still building it: a full-stack platform for managing rentals, with AI integration into the dashboards. It's handled <strong>$5M in assets</strong> so far. First time taking something from a half-formed idea all the way to a product people actually rely on, and I've learned a ton doing it.</p>
-            <ul class="stack"><li>Full-stack</li><li>AI dashboards</li><li>Product</li></ul>
-          </div>
-        </li>
-        <li class="exp">
-          <div class="exp-when">Jun – Aug 2025</div>
-          <div class="exp-body">
-            <h3 class="exp-role">Software Engineer Intern</h3>
-            <p class="exp-org">Genpact · Remote</p>
-            <p class="exp-desc">I automated a data pipeline that used to take four hours a day, every single day. I used Python and FastAPI, with retries, validation, and Slack alerts to reduce downstream data failures. I also built a RAG system over 1,500+ financial documents that answers questions with actual citations, working alongside four teams of 15+ engineers.</p>
-            <ul class="stack"><li>Python</li><li>FastAPI</li><li>RAG</li><li>LLMs</li></ul>
-          </div>
-        </li>
-        <li class="exp">
-          <div class="exp-when">Jun – Aug 2024</div>
-          <div class="exp-body">
-            <h3 class="exp-role">Software Engineer Intern</h3>
-            <p class="exp-org">Falcon Technologies · New Delhi</p>
-            <p class="exp-desc">I worked on payment microservices in Java and Spring Boot. I added async processing that cut transaction latency by 20%, plus a real-time Kafka analytics pipeline and OAuth2-secured APIs. I also set up the Jenkins CI/CD pipeline, which pushed our test coverage from 60% up to 88%.</p>
-            <ul class="stack"><li>Java</li><li>Spring Boot</li><li>Kafka</li><li>Jenkins</li></ul>
-          </div>
-        </li>
-        <li class="exp">
-          <div class="exp-when">Aug 2024 – May 2025</div>
-          <div class="exp-body">
-            <h3 class="exp-role">Research Assistant</h3>
-            <p class="exp-org">AccessWear Lab · Stony Brook University</p>
-            <p class="exp-desc">I built a gesture-recognition app that lets visually-impaired users control a phone without ever looking at it. Apple Watch sensors, 70%+ accuracy, 57ms latency, on both iOS and Android. Then I ran a 20-person study with the therapy department that bumped accuracy up another 17%.</p>
-            <ul class="stack"><li>Swift</li><li>Core ML</li><li>iOS / Android</li><li>Sensors</li></ul>
-          </div>
-        </li>
-        <li class="exp exp-cluster">
-          <div class="exp-when">2023 – 2025</div>
-          <div class="exp-body">
-            <h3 class="exp-role">Teaching &amp; leadership</h3>
-            <p class="exp-org">Stony Brook University</p>
-            <ul class="cluster-list">
-              <li><span>Teaching Assistant</span> — Object-Oriented Programming, Data Structures &amp; Algorithms (CSE 214), and Multivariable Calculus (AMS 261). Honestly some of my favorite work.</li>
-              <li><span>Peer Tutor</span> — Linear Algebra &amp; Calculus II, one-on-one.</li>
-              <li><span>VIP Team Lead</span> — co-led five engineers building a Gemini-AI Chrome extension.</li>
-              <li><span>Hall Council President</span> — led nine people serving 300+ residents.</li>
-            </ul>
-          </div>
-        </li>
-      </ol>
-    </section>
-
-    <!-- ============ ABOUT ============ -->
-    <section class="chapter" id="about" aria-labelledby="about-title">
-      <div class="chapter-head">
-        <span class="chapter-no">03</span>
-        <div><h2 class="chapter-title" id="about-title">A bit about me</h2></div>
-      </div>
-      <div class="about">
-        <p class="about-lede">I picked up robotics in fifth grade and never really put it down. The tools have changed — but the instinct to take something apart just to see how it works hasn't.</p>
-        <div class="about-cols">
-          <p>I just finished my degree at Stony Brook — Computer Science and Applied Math &amp; Statistics, with an AI/DS specialization. I like building for real people: I'm just as happy fighting with a database as I am implementing real user feedback into our work.</p>
-          <p>Teaching DSA, algorithms, and calculus for a couple of years taught me the other half of the job — an idea isn't really finished until a 14-year old can look at it and get it. I try to write code, and explanations, that way.</p>
-        </div>
-
-        <div class="outside">
-          <p class="outside-label">Outside the terminal</p>
-          <ul class="outside-list">
-            <li><span class="out-k">Piano</span><span class="out-v">Fifteen years in, with a few Trinity College London certificates to show for it.</span></li>
-            <li><span class="out-k">Formula 1</span><span class="out-v">Haven't missed a race since 2020. Super Max. 🧡</span></li>
-            <li><span class="out-k">Lifting</span><span class="out-v">Best part of my day. Cardio I merely tolerate.</span></li>
-            <li><span class="out-k">Cooking</span><span class="out-v">Started with my mom's Indian recipes, now I'll try cooking just about anything.</span></li>
+  <ol class="xp">
+    <li class="xp-row reveal">
+      <span class="xp-logo" aria-hidden="true">K</span>
+      <div class="xp-main">
+        <h3>kaya</h3>
+        <p class="xp-role">founder</p>
+        <details class="xp-details">
+          <summary>my work</summary>
+          <ul>
+            <li>building an ai-powered rental management platform end to end, from dashboards and authentication through to payments</li>
+            <li>developed ai features that summarize portfolio activity and surface what needs a human decision</li>
+            <li>managing $5M in assets to date</li>
           </ul>
-          <p class="outside-langs">I speak English, Hindi, and Punjabi — plus enough Spanish to get by.</p>
-        </div>
+        </details>
       </div>
-    </section>
+      <div class="xp-meta">
+        <span class="xp-when">apr 2023 - present</span>
+        <span class="xp-where">remote</span>
+      </div>
+    </li>
 
-    <!-- ============ CONTACT (ink closer) ============ -->
-    <section class="closer" id="contact" aria-labelledby="contact-title">
-      <span class="chapter-no light">04</span>
-      <h2 class="closer-title" id="contact-title">Let's build<br>something.</h2>
-      <p class="closer-sub">I'm looking for a Software team to build with — available now, based in Boston, happy to work from anywhere. Email or LinkedIn is the fastest way to reach me.</p>
-      <ul class="closer-links">
-        <li><span>Email</span><a href="mailto:dheriraghav@gmail.com">dheriraghav@gmail.com <span aria-hidden="true">↗</span></a></li>
-        <li><span>LinkedIn</span><a href="https://linkedin.com/in/raghav-dheri" target="_blank" rel="noopener">in/raghav-dheri <span aria-hidden="true">↗</span></a></li>
-        <li><span>GitHub</span><a href="https://github.com/rdheri" target="_blank" rel="noopener">github.com/rdheri <span aria-hidden="true">↗</span></a></li>
+    <li class="xp-row reveal">
+      <span class="xp-logo" aria-hidden="true">G</span>
+      <div class="xp-main">
+        <h3>genpact</h3>
+        <p class="xp-role">software engineer intern</p>
+        <details class="xp-details">
+          <summary>my work</summary>
+          <ul>
+            <li>automated a daily 4-hour manual data collection process by leading a team of 5 to build a Python and FastAPI application</li>
+            <li>developed a Retrieval-Augmented Generation (RAG) recommendation model over 1500+ financial documents, incorporating Meta's Ollama LLM to provide source-cited answers to analysts' queries</li>
+            <li>added automatic retries, data validation, and Slack alerts to detect and minimize silent failures in the pipeline</li>
+          </ul>
+        </details>
+      </div>
+      <div class="xp-meta">
+        <span class="xp-when">jun 2025 - aug 2025</span>
+        <span class="xp-where">remote</span>
+      </div>
+    </li>
+
+    <li class="xp-row reveal">
+      <span class="xp-logo" aria-hidden="true">F</span>
+      <div class="xp-main">
+        <h3>falcon financial technologies</h3>
+        <p class="xp-role">software engineer intern</p>
+        <details class="xp-details">
+          <summary>my work</summary>
+          <ul>
+            <li>integrated asynchronous processing into existing Java and Spring Boot microservices, reducing transaction latency 20%</li>
+            <li>used Redis to cache read-heavy endpoints that called the database on every request, cutting average API latency 75%</li>
+            <li>implemented a Jenkins CI/CD pipeline to run automated unit and integration tests on every Git push</li>
+          </ul>
+        </details>
+      </div>
+      <div class="xp-meta">
+        <span class="xp-when">jun 2024 - aug 2024</span>
+        <span class="xp-where">new delhi, india</span>
+      </div>
+    </li>
+
+    <li class="xp-row reveal">
+      <span class="xp-logo" aria-hidden="true">A</span>
+      <div class="xp-main">
+        <h3>sbu accesswear laboratory</h3>
+        <p class="xp-role">undergraduate researcher</p>
+        <details class="xp-details">
+          <summary>my work</summary>
+          <ul>
+            <li>led a 20 participant study in collaboration with the therapy department; data collected contributed to an 18% increase in the mobile application's gesture recognition accuracy for blind users</li>
+          </ul>
+        </details>
+      </div>
+      <div class="xp-meta">
+        <span class="xp-when">jun 2024 - dec 2024</span>
+        <span class="xp-where">stony brook, ny</span>
+      </div>
+    </li>
+
+    <li class="xp-row reveal">
+      <span class="xp-logo" aria-hidden="true">S</span>
+      <div class="xp-main">
+        <h3>stony brook university</h3>
+        <p class="xp-role">teaching assistant, data structures and algorithms</p>
+        <details class="xp-details">
+          <summary>my work</summary>
+          <ul>
+            <li>organized and held live-coding laboratories in advanced data structures, algorithms, and OOP for 300+ students weekly</li>
+            <li>collaborated with the professor to design test cases for automated grading of 20+ Java assignments across several semesters</li>
+          </ul>
+        </details>
+      </div>
+      <div class="xp-meta">
+        <span class="xp-when">aug 2023 - dec 2024</span>
+        <span class="xp-where">stony brook, ny</span>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<!-- ===================== 03 · SKILLS ===================== -->
+<section class="section" id="skills">
+  <header class="section-head reveal">
+    <span class="section-num">03</span>
+    <h2><em>skills</em></h2>
+  </header>
+
+  <div class="skills">
+    <div class="skill-group reveal">
+      <h3>languages</h3>
+      <ul class="chips chips-big"><li>Java</li><li>Python</li><li>TypeScript</li><li>JavaScript</li><li>Go</li><li>C</li><li>SQL</li><li>OCaml</li><li>MIPS</li></ul>
+    </div>
+    <div class="skill-group reveal">
+      <h3>backend / apis</h3>
+      <ul class="chips chips-big"><li>Spring&nbsp;Boot</li><li>Node.js</li><li>Express</li><li>REST</li><li>PostgreSQL</li><li>MongoDB</li><li>Neo4j</li><li>Redis</li><li>DynamoDB</li></ul>
+    </div>
+    <div class="skill-group reveal">
+      <h3>frontend / cloud</h3>
+      <ul class="chips chips-big"><li>React</li><li>Next.js</li><li>AWS&nbsp;S3</li><li>Docker</li><li>Jenkins</li><li>Git</li><li>Jira</li><li>CI/CD</li><li>JUnit</li></ul>
+    </div>
+    <div class="skill-group reveal">
+      <h3>ai tools</h3>
+      <ul class="chips chips-big"><li>Claude&nbsp;Code</li><li>GitHub&nbsp;Copilot</li><li>Codex</li><li>Cursor&nbsp;AI</li><li>RAG</li><li>Pandas</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 04 · EDUCATION ===================== -->
+<section class="section" id="education">
+  <header class="section-head reveal">
+    <span class="section-num">04</span>
+    <h2><em>education</em></h2>
+  </header>
+
+  <div class="edu-grid">
+    <article class="edu-card reveal">
+      <span class="edu-when">2022 - 2026</span>
+      <h3>stony brook university</h3>
+      <p class="edu-degree">b.s., double major in computer science <em>and</em> applied
+         mathematics &amp; statistics (AI/DS specialization)</p>
+      <ul class="chips"><li>cum laude</li><li>GPA 3.60</li><li>dean's list ×7</li></ul>
+    </article>
+    <article class="edu-card reveal">
+      <span class="edu-when">high school</span>
+      <h3>dps international</h3>
+      <p class="edu-degree">as &amp; a levels</p>
+      <ul class="chips"><li>topper's list</li><li>scholar's badge ×2</li><li>global excellence scholarship</li></ul>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== 05 · BUILDING WITH AI ===================== -->
+<section class="section section-ai" id="ai">
+  <header class="section-head reveal">
+    <span class="section-num">05</span>
+    <h2>building <em>with ai</em></h2>
+  </header>
+
+  <div class="ai-wrap">
+    <figure class="ai-scene reveal" aria-label="Animated illustration of Raghav typing a prompt into Claude Code">
+      <svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg">
+        <!-- floor + desk -->
+        <line class="ai-desk" x1="30" y1="352" x2="610" y2="352"/>
+        <rect class="ai-desk-leg" x="70" y="352" width="10" height="50"/>
+        <rect class="ai-desk-leg" x="560" y="352" width="10" height="50"/>
+        <!-- plant -->
+        <path class="ai-plant" d="M580 330c-8-24 4-40 4-40s14 16 6 40Zm8 0c-2-18 12-28 12-28s6 18-4 28Z"/>
+        <rect class="ai-pot" x="576" y="330" width="26" height="22" rx="4"/>
+        <!-- mug -->
+        <rect class="ai-mug" x="238" y="330" width="26" height="22" rx="4"/>
+        <path class="ai-steam" d="M251 322c-3-5 3-7 0-12"/>
+        <!-- the boy, seated, typing -->
+        <g class="ai-boy">
+          <rect class="ai-chair" x="52" y="268" width="14" height="90" rx="6"/>
+          <path class="ai-chair" d="M46 400c0-28 12-46 34-46h30l-4 46Z"/>
+          <path class="ai-boy-body" d="M96 352c-4-52 18-84 52-88l22 10 6 30-14 48Z"/>
+          <g class="ai-boy-head">
+            <circle class="ai-boy-skin" cx="166" cy="240" r="30"/>
+            <path class="ai-boy-hair" d="M134 242c-3-34 14-48 32-48s35 14 32 46l-7 2c1-10-1-16-4-21l-7 9-9-9-9 9-9-7c-4 5-6 11-6 19Z"/>
+            <path class="ai-boy-glass" d="M146 246a8 8 0 1 0 16 0a8 8 0 1 0 -16 0M170 246a8 8 0 1 0 16 0a8 8 0 1 0 -16 0M162 246h8"/>
+            <circle class="ai-boy-eye" cx="154" cy="247" r="2.4"/>
+            <circle class="ai-boy-eye" cx="178" cy="247" r="2.4"/>
+            <path class="ai-boy-smile" d="M158 260c5 4 11 4 16 0"/>
+          </g>
+          <path class="ai-boy-arm" d="M150 296c26-8 52-6 78 4l-4 14c-24-8-48-10-70-4Z"/>
+          <ellipse class="ai-boy-hand" cx="232" cy="308" rx="10" ry="7"/>
+        </g>
+        <!-- laptop -->
+        <path class="ai-laptop-base" d="M208 330l14-8h96l10 8Z"/>
+        <!-- monitor / claude code window -->
+        <g class="ai-window">
+          <clipPath id="screenClip"><rect x="312" y="84" width="276" height="202" rx="8"/></clipPath>
+          <rect class="ai-monitor" x="300" y="72" width="300" height="226" rx="14"/>
+          <rect class="ai-screen" x="312" y="84" width="276" height="202" rx="8"/>
+          <circle class="ai-dot d1" cx="330" cy="100" r="4"/>
+          <circle class="ai-dot d2" cx="344" cy="100" r="4"/>
+          <circle class="ai-dot d3" cx="358" cy="100" r="4"/>
+          <text class="ai-title" x="450" y="104" text-anchor="middle">claude code</text>
+          <g clip-path="url(#screenClip)">
+            <text class="ai-prompt" x="326" y="136"><tspan class="ai-chevron">❯</tspan><tspan id="ai-typed" dx="8"></tspan></text>
+            <rect id="ai-caret" class="ai-caret" x="340" y="124" width="8" height="15"/>
+            <g id="ai-response">
+              <rect class="ai-line" x="326" y="156" width="190" height="8" rx="4"/>
+              <rect class="ai-line" x="326" y="172" width="238" height="8" rx="4"/>
+              <rect class="ai-line ai-line-accent" x="326" y="188" width="150" height="8" rx="4"/>
+              <rect class="ai-line" x="326" y="204" width="216" height="8" rx="4"/>
+              <rect class="ai-line" x="326" y="220" width="120" height="8" rx="4"/>
+              <text id="ai-done" class="ai-done" x="326" y="252">✓ shipped. tests pass, diff read</text>
+            </g>
+          </g>
+          <rect class="ai-stand" x="436" y="298" width="28" height="46"/>
+          <rect class="ai-stand" x="406" y="344" width="88" height="8" rx="4"/>
+        </g>
+      </svg>
+    </figure>
+
+    <div class="ai-copy">
+      <p class="ai-lede reveal">i use ai to solve problems <em>exponentially faster.</em></p>
+      <ul class="ai-points">
+        <li class="reveal"><span class="ai-point-num">a</span>i point ai at the heavy lifting so i can spend my time asking the right questions.</li>
+        <li class="reveal"><span class="ai-point-num">b</span>i read every diff before it ships. moving fast is no excuse for shipping code i don't understand.</li>
+        <li class="reveal"><span class="ai-point-num">c</span>i can explain every line in this codebase. my name is on it, so i own it.</li>
       </ul>
-    </section>
+    </div>
+  </div>
+</section>
 
-  </main>
+<!-- ===================== ABOUT ===================== -->
+<section class="section" id="about">
+  <header class="section-head reveal">
+    <span class="section-num">06</span>
+    <h2>about <em>me</em></h2>
+  </header>
 
-  <footer class="colophon">
-    <span>Raghav Dheri © 2026</span>
-    <span>Built by hand — no framework, no template.</span>
-  </footer>
+  <div class="about">
+    <p class="about-lede reveal">who am i, if not my name, or where i come from, or my skin,
+       or my background?</p>
 
-  <script src="app.js" defer></script>
+    <div class="about-body">
+      <p class="reveal">i'm a creative who codes, with a degree in computer science and applied
+         math to back up the second half. i do everything i put my mind to, whether that's
+         perfect scores, teaching a hall of 300 students, apps i built solo, or design that has
+         actual soul and personality instead of ai slop.</p>
+
+      <p class="reveal">i love anything that stimulates my mind. optimising a silly problem,
+         finding a sideways route around a real one. i'm always thinking in algorithms. every
+         time i pick up a system i start decoding it, the design first and then the UX. i'm a
+         big UX guy.</p>
+
+      <p class="reveal">i love working with visionaries. put me in a creative high and i'll
+         happily lose the whole day to it. i want to help make a difference, even a small one,
+         because small things snowball.</p>
+    </div>
+
+    <p class="about-langs reveal">
+      <span class="langs-label">i say hello in five. you saw them on the way in.</span>
+      English · हिन्दी · Español · ਪੰਜਾਬੀ · ગુજરાતી
+    </p>
+  </div>
+</section>
+
+<!-- ===================== CONTACT / CLOSER ===================== -->
+<section class="closer" id="contact">
+  <h2 class="closer-title reveal">let's build<br><em>something.</em></h2>
+  <p class="closer-note reveal">i'm looking for a team to build with. available now, based in
+     cambridge, happy to work from anywhere. email or linkedin is the fastest way to reach me.</p>
+  <div class="closer-links reveal">
+    <a href="mailto:dheriraghav@gmail.com">email <span>dheriraghav@gmail.com</span></a>
+    <a href="https://linkedin.com/in/raghav-dheri" target="_blank" rel="noopener">linkedin <span>in/raghav-dheri</span></a>
+    <a href="https://github.com/rdheri" target="_blank" rel="noopener">github <span>github.com/rdheri</span></a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-foot">
+  <span>Raghav Dheri © 2026</span>
+  <span>built from scratch. no framework, no template</span>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>
