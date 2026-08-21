@@ -1,6 +1,6 @@
 /* ============================================================
    raghavdheri.com — interaction layer
-   loader (hello ×5) · theme · scrollspy · blush · claude-code scene
+   loader (hello ×5, PS5 boot) · theme · scrollspy · blush · claude-code scene
    ============================================================ */
 (function () {
   'use strict';
@@ -18,6 +18,17 @@
     'ਸਤ ਸ੍ਰੀ ਅਕਾਲ',      // punjabi
     'કેમ છો'             // gujarati
   ];
+
+  // Face buttons double as the progress row: greetings 1–4 light one key each,
+  // greeting 5 fires all four — four keys, five hellos, so the last is a combo.
+  var keysWrap = document.getElementById('ps-keys');
+  var keys = keysWrap ? [].slice.call(keysWrap.querySelectorAll('.ps-key')) : [];
+
+  function lightKey(n) {
+    if (!keys.length) return;
+    if (n < keys.length) keys[n].classList.add('is-lit');
+    else keysWrap.classList.add('is-combo');
+  }
 
   document.body.classList.add('is-loading');
 
@@ -42,6 +53,7 @@
       word.classList.remove('is-in');
       void word.offsetWidth; // restart the entrance animation
       word.classList.add('is-in');
+      lightKey(i);
       i += 1;
       if (i < greetings.length) setTimeout(next, step);
       else setTimeout(finishLoader, step + 140);

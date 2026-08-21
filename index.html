@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Raghav Dheri | Software Engineer</title>
 <meta name="description" content="Raghav Dheri. I'm a software engineer that works across the full stack. I love to ask the right questions and think about the people I'm building for. I have a product-first mindset, and use AI to solve problems exponentially faster.">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#050A14">
 <meta property="og:title" content="Raghav Dheri | Software Engineer">
 <meta property="og:description" content="I'm a software engineer that works across the full stack. I have a product-first mindset, and use AI to solve problems exponentially faster.">
 <meta property="og:url" content="https://raghavdheri.com">
@@ -25,11 +25,52 @@
 </head>
 <body>
 
-<!-- ===================== LOADER — hello in my five languages ===================== -->
+<!-- ===================== LOADER — hello in my five languages, PS5-style ===================== -->
 <div id="loader" aria-hidden="true">
+  <div class="boot-halo"></div>
   <div class="loader-inner">
+
+    <!-- the PS5 loading indicator: a faint track with a blue arc sweeping it -->
+    <div class="ps-ring">
+      <svg viewBox="0 0 72 72">
+        <circle class="ps-ring-track" cx="36" cy="36" r="30"/>
+        <g class="ps-ring-spin">
+          <circle class="ps-ring-tail" cx="36" cy="36" r="30"/>
+          <circle class="ps-ring-arc"  cx="36" cy="36" r="30"/>
+        </g>
+      </svg>
+    </div>
+
     <span id="loader-word" class="loader-word">Hello</span>
-    <span class="loader-hint">raghavdheri.com</span>
+
+    <!-- face buttons as the progress row: one lights per language, then all four -->
+    <ul class="ps-keys" id="ps-keys">
+      <li class="ps-key">
+        <svg viewBox="0 0 28 28">
+          <circle class="ps-key-ring" cx="14" cy="14" r="12.4"/>
+          <path class="ps-key-glyph" d="M14 8.5 18.8 16.8 9.2 16.8Z"/>
+        </svg>
+      </li>
+      <li class="ps-key">
+        <svg viewBox="0 0 28 28">
+          <circle class="ps-key-ring" cx="14" cy="14" r="12.4"/>
+          <circle class="ps-key-glyph" cx="14" cy="14" r="4.5"/>
+        </svg>
+      </li>
+      <li class="ps-key">
+        <svg viewBox="0 0 28 28">
+          <circle class="ps-key-ring" cx="14" cy="14" r="12.4"/>
+          <path class="ps-key-glyph" d="M10.6 10.6 17.4 17.4M17.4 10.6 10.6 17.4"/>
+        </svg>
+      </li>
+      <li class="ps-key">
+        <svg viewBox="0 0 28 28">
+          <circle class="ps-key-ring" cx="14" cy="14" r="12.4"/>
+          <rect class="ps-key-glyph" x="9.9" y="9.9" width="8.2" height="8.2" rx="0.9"/>
+        </svg>
+      </li>
+    </ul>
+
   </div>
 </div>
 
